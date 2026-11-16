@@ -28,6 +28,10 @@ strictly higher than the previous one.
   `interferosim.signal`, not in `interferosim.observation`; row for the SDR
   signal simulation and FX correlator (`interferosim.signal`) added, the
   observation row lists transit, Sun and spectral lines.
+- Sphinx chapter "The radio interferometer", table "Processing chain of
+  Interferosim": same correction (FX correlator in `interferosim.signal`);
+  the outdated notes "correlator in preparation" and "deconvolution in
+  preparation" removed.
 
 ## [1.0.3] — 2026-11-09
 
