@@ -20,6 +20,8 @@ strictly higher than the previous one.
 - Sphinx start page: status paragraph brought up to date (observation,
   signal/FX correlator, imaging, deconvolution and all notebooks are
   available; open: `io` and `widgets`).
+- README, chapter "Notebooks": new section "Workflow" with the workflow
+  figure and a table of the notebooks per workflow step.
 
 ## [1.0.3] — 2026-11-09
 
