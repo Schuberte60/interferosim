@@ -1,4 +1,5 @@
 .. docs/sphinx/index.rst -- start page of the Interferosim documentation
+.. 2026-11-16: chapter "Introduction and workflow" (introduction.rst) added to the user guide
 
 Interferosim
 ============
@@ -21,6 +22,7 @@ migrated from
    :maxdepth: 2
    :caption: User guide
 
+   introduction
    interferometer
    installation
    quickstart

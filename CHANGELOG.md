@@ -6,6 +6,15 @@ strictly higher than the previous one.
 
 ## [Unreleased]
 
+### Added
+- Sphinx documentation: chapter "Introduction and workflow"
+  (`docs/sphinx/introduction.rst`), first chapter of the user guide. It
+  describes the simulation branch (Sim-Measure), the measurement branch
+  (SDR-Measure), the common IQ interface, the common processing and the
+  analytic shortcut, with a table of the matching notebooks.
+- `docs/images/workflow.tex` (TikZ) with `workflow.pdf` / `workflow.png`:
+  workflow figure for the new chapter, drawn after the hand sketch.
+
 ## [1.0.2] — 2026-11-09
 
 ### Changed
