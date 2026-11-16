@@ -23,6 +23,12 @@ strictly higher than the previous one.
 - README, chapter "Notebooks": new section "Workflow" with the workflow
   figure and a table of the notebooks per workflow step.
 
+### Fixed
+- README, table "Processing chain": the correlator is in
+  `interferosim.signal`, not in `interferosim.observation`; row for the SDR
+  signal simulation and FX correlator (`interferosim.signal`) added, the
+  observation row lists transit, Sun and spectral lines.
+
 ## [1.0.3] — 2026-11-09
 
 ### Fixed

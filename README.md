@@ -227,7 +227,8 @@ the theory notebooks.
 |---|---|
 | Sky models (point, extended, HI 21 cm, OH masers, solar disc) | `interferosim.sky` |
 | Antennas (selectable types), receiver (Ettus USRP B210), array | `interferosim.instrument` |
-| Geometry, uv-coverage, visibilities, correlator | `interferosim.observation` |
+| Geometry, uv-coverage, analytic visibilities, transit, Sun, spectral lines | `interferosim.observation` |
+| SDR signal simulation (IQ samples per station), FX correlator | `interferosim.signal` |
 | Gridding, weighting, dirty image and beam | `interferosim.imaging` |
 | Högbom-CLEAN, Wiener filter, restoration | `interferosim.deconvolution` |
 | FITS input/output | `interferosim.io` |
