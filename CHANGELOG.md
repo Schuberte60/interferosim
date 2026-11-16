@@ -16,6 +16,11 @@ strictly higher than the previous one.
   workflow figure for the new chapter, drawn after the hand sketch; also
   shown as overview on the start page (`docs/sphinx/index.rst`).
 
+### Changed
+- Sphinx start page: status paragraph brought up to date (observation,
+  signal/FX correlator, imaging, deconvolution and all notebooks are
+  available; open: `io` and `widgets`).
+
 ## [1.0.3] — 2026-11-09
 
 ### Fixed
