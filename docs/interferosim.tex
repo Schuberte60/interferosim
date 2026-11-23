@@ -60,6 +60,8 @@
 %           chapter "Basic Design"
 % 0.2.2:    (2026-10-12) appendix texte/90_appendix (detailed explanations
 %           and supplements)
+% 0.2.5:    (2026-11-23) fewer overfull lines: \emergencystretch and
+%           break points in \texttt after \_, "/", "." and \textbackslash
 % ==============================================
 \documentclass[
 paper=a4,
@@ -88,6 +90,45 @@ chapterprefix=false,% Kapitel nicht anschreiben als
 %\input{../../../../tex-skripten/formatierungen/listings-json.tex}
 \input{style/listings-json.tex}
 \input{style/uml-styles.tex}      % 0.2.1: UML notation for TikZ (basic design)
+
+% 0.2.5: line breaking. Long code names in \texttt (e.g. module and file
+% names) cannot be hyphenated and ran over the right margin (overfull
+% \hbox). \emergencystretch lets TeX move such a name to the next line
+% instead; \_ (written in \texttt names such as fringe\_stop) may now break
+% after the underscore. In PDF bookmarks \_ stays a plain underscore.
+\setlength{\emergencystretch}{0.15\textwidth}
+\DeclareRobustCommand{\_}{\textunderscore\allowbreak}
+\pdfstringdefDisableCommands{\def\_{\textunderscore}}
+% 0.2.5: tables that were wider than the text use tabularx with the
+% left-aligned, line-breaking column type L
+\usepackage{tabularx}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+% 0.2.5: \texttt may also break after "/", "." and \textbackslash (paths
+% such as configs/receivers/b210.toml, dotted Python names such as
+% interferosim.constants). The break points carry a small penalty, so TeX
+% uses them only when a line would otherwise run over the margin. Only
+% the top level of the argument is changed (no URLs occur in \texttt).
+\ExplSyntaxOn
+\tl_new:N \l__isim_tt_tl
+\cs_new_protected:Npn \isim_tt_breaks:n #1
+  {
+    \tl_set:Nn \l__isim_tt_tl {#1}
+    \tl_replace_all:Nnn \l__isim_tt_tl { / } { / \penalty \exhyphenpenalty }
+    \tl_replace_all:Nnn \l__isim_tt_tl { . } { . \penalty \exhyphenpenalty }
+    \tl_replace_all:Nnn \l__isim_tt_tl { \textbackslash }
+      { \textbackslash \penalty \exhyphenpenalty }
+    \tl_use:N \l__isim_tt_tl
+  }
+\ExplSyntaxOff
+% \NewCommandCopy keeps a working copy of the robust \texttt (a plain \let
+% would call the redefined command again and loop).
+\NewCommandCopy{\isimOriginalTexttt}{\texttt}
+\ExplSyntaxOn
+\DeclareRobustCommand{\texttt}[1]{\isimOriginalTexttt{\isim_tt_breaks:n{#1}}}
+\ExplSyntaxOff
+\makeatletter
+\pdfstringdefDisableCommands{\let\texttt\@firstofone}
+\makeatother
 
 
 %\makenomenclature       % Abkürzungen erstellen

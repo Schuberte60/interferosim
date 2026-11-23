@@ -1,5 +1,6 @@
 % docs/texte/20_core/antennas.tex -- chapter "Antennas" (Interferosim)
-% Version: 0.3.0 (2026-10-12) -- implementation (interferosim 0.3.0), beam figure
+% Version: 0.3.1 (2026-11-23) -- table of proposed types as tabularx (overfull line)
+%   0.3.0 (2026-10-12) -- implementation (interferosim 0.3.0), beam figure
 %   0.2.0: antenna types and proposals
 %   0.1.0: placeholder
 % ================================================================
@@ -95,7 +96,8 @@ Yagi 13 el. & 1420.406 & 15.00 & 0.112 & 33.93 & 2\,955\,887 \\
 \section{Proposals for further types}
 
 \begin{center}
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{5.2cm}@{}}
+% 0.3.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}LL@{}}
 \toprule
 Type & Properties & Why for Interferosim \\
 \midrule
@@ -112,7 +114,7 @@ Patch / patch array & flat, reproducible, gain grows with the number of
   patches & compact arrays of many elements for uv-coverage
   experiments \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 Recommendation: helix and LPDA as the next two types -- the helix for the

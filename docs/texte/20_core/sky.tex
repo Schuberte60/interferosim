@@ -1,5 +1,6 @@
 % docs/texte/20_core/sky.tex -- chapter "Sky Models" (Interferosim)
-% Version: 0.2.2 (2026-10-12) -- gallery figure of all sky files (fig:sky-gallery)
+% Version: 0.2.3 (2026-11-23) -- table of source kinds as tabularx (overfull line)
+%   0.2.2 (2026-10-12) -- gallery figure of all sky files (fig:sky-gallery)
 %   0.2.1: catalogue of known sources (A-team, Orion A)
 %   0.2.0: package interferosim.sky implemented
 %   0.1.0: placeholder
@@ -13,7 +14,8 @@ component visibilities is given in chapter~\ref{ch:visibility}.
 \section{Components}
 
 \begin{center}
-\begin{tabular}{@{}lll>{\raggedright\arraybackslash}p{5.6cm}@{}}
+% 0.2.3: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}llLL@{}}
 \toprule
 \texttt{kind} & Class & Parameters & Visibility \\
 \midrule
@@ -23,7 +25,7 @@ component visibilities is given in chapter~\ref{ch:visibility}.
 \texttt{disc}  & \texttt{DiscSource} & \texttt{diameter\_deg}, \texttt{limb}, \texttt{limb\_power}
                & $2J_1(x)/x$ (uniform) or Hankel transform (limb-brightened) \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 All components share \texttt{name}, \texttt{dx\_deg}, \texttt{dy\_deg}

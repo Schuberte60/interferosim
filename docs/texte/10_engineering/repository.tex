@@ -1,9 +1,11 @@
 % docs/texte/10_engineering/repository.tex -- chapter "Repository Structure" (Interferosim)
-% Version: 0.2.0 (2026-11-03) -- signal/, demo/, API documentation added (interferosim 1.0.0)
+% Version: 0.2.1 (2026-11-23) -- table as tabularx (overfull line)
+%   0.2.0 (2026-11-03) -- signal/, demo/, API documentation added (interferosim 1.0.0)
 %   0.1.0 (2026-10-12)
 % ================================================================
 
-\begin{tabular}{@{}ll@{}}
+% 0.2.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}lL@{}}
 \toprule
 \textbf{Path} & \textbf{Content} \\
 \midrule
@@ -24,4 +26,4 @@
 \texttt{docs/} & this documentation (\LaTeX) \\
 \texttt{\quad api/}, \texttt{sphinx/} & API documentation (Doxygen, Sphinx) \\
 \bottomrule
-\end{tabular}
+\end{tabularx}

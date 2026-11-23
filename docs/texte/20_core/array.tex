@@ -1,5 +1,6 @@
 % docs/texte/20_core/array.tex -- chapter "Stations and Array" (Interferosim)
-% Version: 0.2.0 (2026-10-12) -- section "Choice of the baseline length" (example Cyg A)
+% Version: 0.2.1 (2026-11-23) -- table of array files as tabularx (overfull line)
+%   0.2.0 (2026-10-12) -- section "Choice of the baseline length" (example Cyg A)
 %   0.1.0: Site, Station, Array (interferosim 0.3.0)
 % ================================================================
 \label{ch:array}
@@ -47,7 +48,8 @@ the first station is the reference (as in AAS6, $\vec B = \vec r_B -
 \section{Configured arrays}
 
 \begin{center}
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{4.2cm}l>{\raggedright\arraybackslash}p{3.6cm}@{}}
+% 0.2.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}LLlL@{}}
 \toprule
 File & Stations & Antenna & Baseline (east, north, up) \\
 \midrule
@@ -56,7 +58,7 @@ File & Stations & Antenna & Baseline (east, north, up) \\
 \texttt{two\_horns\_10m.toml} & H1, H2 as offsets from the site
   (notebook~B) & horn 15\,dBi & 10, 0, 0\,m \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 The two AAS6 stations lie on the same latitude, so the baseline is
 almost purely east--west; the \emph{up} component is the curvature of the

@@ -17,6 +17,10 @@ strictly higher than the previous one.
   shown as overview on the start page (`docs/sphinx/index.rst`).
 
 ### Changed
+- LaTeX documentation 1.0.1, chapter "Tests and Validation"
+  (`docs/texte/40_qa/tests.tex` 0.3.1): table of all eight test modules
+  (was two), further calls (`-k`, `--collect-only`, `uv run pytest`);
+  the table is a `longtable`.
 - Sphinx start page: status paragraph brought up to date (observation,
   signal/FX correlator, imaging, deconvolution and all notebooks are
   available; open: `io` and `widgets`).
@@ -24,6 +28,13 @@ strictly higher than the previous one.
   figure and a table of the notebooks per workflow step.
 
 ### Fixed
+- LaTeX documentation: overfull lines removed. `interferosim.tex` 0.2.5
+  allows line breaks in `\texttt` after `\_`, `/`, `.` and
+  `\textbackslash` and sets `\emergencystretch`; tables wider than the
+  text use `tabularx` (environment, repository, data formats, API
+  documentation, sky models, antennas, array); the notebook table is a
+  `longtable` (was higher than the page); the UML package diagram is
+  scaled to the text width.
 - README, table "Processing chain": the correlator is in
   `interferosim.signal`, not in `interferosim.observation`; row for the SDR
   signal simulation and FX correlator (`interferosim.signal`) added, the

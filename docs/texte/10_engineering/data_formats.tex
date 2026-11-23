@@ -1,5 +1,6 @@
 % docs/texte/10_engineering/data_formats.tex -- chapter "Data Formats" (Interferosim)
-% Version: 0.4.0 (2026-10-31) -- VisData in memory
+% Version: 0.4.1 (2026-11-23) -- first two tables as tabularx (overfull lines)
+%   0.4.0 (2026-10-31) -- VisData in memory
 % 0.3.0 (2026-10-31) -- receiver keys of the device profile, base
 % 0.2.0 (2026-10-12) -- arrays: site/antenna/receiver references,
 %   stations as offsets east/north/up; horn design_freq_hz
@@ -9,7 +10,8 @@
 \index{data formats}
 
 \begin{center}
-\begin{tabular}{@{}lll@{}}
+% 0.4.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}lLl@{}}
 \toprule
 Content & Format & Location \\
 \midrule
@@ -20,7 +22,7 @@ Sites and stations & TOML & \texttt{configs/sites/} \\
 Visibilities & FITS binary table & output of the simulation \\
 Maps, spectra, time series & FITS (from \texttt{aas6sim}) & output \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \section{Sky models}
@@ -35,7 +37,8 @@ See chapter~\ref{ch:sky-models}. JSON with \texttt{center}
 \paragraph*{Antennas} (\texttt{configs/antennas/*.toml}), common keys
 \texttt{name}, \texttt{type}; further keys depend on the type:
 \begin{center}
-\begin{tabular}{@{}ll@{}}
+% 0.4.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}lL@{}}
 \toprule
 \texttt{type} & Keys \\
 \midrule
@@ -44,7 +47,7 @@ See chapter~\ref{ch:sky-models}. JSON with \texttt{center}
 \texttt{yagi} & \texttt{n\_elements}, \texttt{boom\_length\_m}, \texttt{gain\_dbi},
                 \texttt{design\_freq\_hz}, \texttt{polarisation} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \paragraph*{Receivers} (\texttt{configs/receivers/*.toml}):

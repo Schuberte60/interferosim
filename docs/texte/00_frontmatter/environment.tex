@@ -1,5 +1,6 @@
 % docs/texte/00_frontmatter/environment.tex -- chapter "System Environment" (Interferosim)
-% Version: 0.2.0 (2026-10-12) -- project virtual environment
+% Version: 0.2.1 (2026-11-23) -- table of setup commands as tabularx (overfull line)
+%   0.2.0 (2026-10-12) -- project virtual environment
 %   0.1.0: placeholder
 % ================================================================
 
@@ -16,7 +17,8 @@ folder (excluded from version control by \texttt{.gitignore}). It is
 created by a script:
 
 \begin{center}
-\begin{tabular}{@{}ll@{}}
+% 0.2.1: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}lL@{}}
 \toprule
 System & Command (in the project folder) \\
 \midrule
@@ -24,7 +26,7 @@ Windows & \texttt{setup\_venv.bat} (double-click) or\\
         & \texttt{powershell -ExecutionPolicy Bypass -File setup\_venv.ps1} \\
 Linux, macOS & \texttt{./setup\_venv.sh} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 The script searches for Python~$\geq$~3.11, creates \texttt{.venv}, installs

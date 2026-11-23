@@ -1,5 +1,6 @@
 % docs/texte/30_notebooks/notebooks.tex -- chapter "Interactive Notebooks" (Interferosim)
-% Version: 0.4.0 (2026-11-03) -- section "Live Demo"; all notebooks of 1.0.0 listed
+% Version: 0.4.1 (2026-11-23) -- notebook table as longtable (overfull vbox)
+%   0.4.0 (2026-11-03) -- section "Live Demo"; all notebooks of 1.0.0 listed
 %   0.3.0 (2026-10-31): notebook 00_general listed
 %   0.2.0 (2026-10-12): notebooks 01 and 02 listed
 %   0.1.0: placeholder
@@ -10,11 +11,19 @@ ipywidgets controls, interactive plots, one notebook per topic
 interactive use; static figures show the results also without a running
 kernel.
 
-\begin{center}
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{9.6cm}@{}}
+% 0.4.1: longtable (may break across pages; as a tabular in a centre
+%   environment the table was higher than the page: overfull \vbox)
+\begin{longtable}{@{}l>{\raggedright\arraybackslash}p{9.6cm}@{}}
 \toprule
 Notebook & Content \\
 \midrule
+\endfirsthead
+\toprule
+Notebook & Content \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
 \texttt{00\_general} & project overview: goal of a VLB interferometer
   with an 11.5\,km baseline, principle, key figures, clock and timing
   requirements, sensitivity, road map \\
@@ -67,9 +76,7 @@ Notebook & Content \\
 \texttt{E\_coordinates} & theory E: equatorial and horizontal coordinates,
   sidereal time, parallactic angle, WGS84/ECEF/ENU, the baseline vector,
   uvw and the uv-ellipse, delay and $w$, precession, selector \\
-\bottomrule
-\end{tabular}
-\end{center}
+\end{longtable}
 With version~1.0.0 the simulation chain (notebooks 00--09) and the theory
 notebooks A--E are complete.
 
