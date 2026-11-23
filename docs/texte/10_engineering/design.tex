@@ -1,5 +1,6 @@
 % docs/texte/10_engineering/design.tex -- chapter "Basic Design" (Interferosim)
-% Version: 0.2.1 (2026-11-03) -- open point "licence" removed (MIT License)
+% Version: 0.2.2 (2026-11-23) -- package diagram scaled to the text width
+%   0.2.1 (2026-11-03) -- open point "licence" removed (MIT License)
 %   0.2.0 (2026-10-12): first draft of the software structure (UML);
 %   0.2.0: package signal (closed simulation with SDR signal), spectral
 %          dimension, TransitSimulator, module visdata, Yagi; open points decided;
@@ -59,7 +60,8 @@ cyclic dependencies.
 
 \begin{figure}[htbp]
   \centering
-  \input{texte/10_engineering/uml/packages.tex}
+  % 0.2.2: scaled to the text width (the diagram was 33 pt too wide)
+  \resizebox{\linewidth}{!}{\input{texte/10_engineering/uml/packages.tex}}
   \caption{UML package diagram of \texttt{interferosim} (draft 0.2)}
   \label{fig:uml-packages}
 \end{figure}

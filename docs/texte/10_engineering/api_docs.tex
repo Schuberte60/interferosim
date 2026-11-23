@@ -1,5 +1,6 @@
 % docs/texte/10_engineering/api_docs.tex -- chapter "API Documentation" (Interferosim)
-% Version: 0.1.2 (2026-11-01) -- Unicode style file for the PDF reference manual
+% Version: 0.1.3 (2026-11-23) -- output table as tabularx (overfull line)
+%   0.1.2 (2026-11-01) -- Unicode style file for the PDF reference manual
 %   0.1.1 (2026-10-12): script build_api_docs
 %   0.1.0: first version
 % ================================================================
@@ -45,7 +46,8 @@ make.bat                               # -> refman.pdf
 \end{lstlisting}
 
 \begin{center}
-\begin{tabular}{@{}ll@{}}
+% 0.1.3: tabularx, the table was wider than the text
+\begin{tabularx}{\linewidth}{@{}lL@{}}
 \toprule
 Output & Content \\
 \midrule
@@ -55,7 +57,7 @@ Output & Content \\
   \texttt{make.bat}) \\
 \texttt{docs/api/doxygen\_warnings.txt} & warnings of the last run \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 The folder \texttt{docs/api/} is generated and therefore excluded from

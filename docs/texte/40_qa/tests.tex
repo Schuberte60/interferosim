@@ -1,5 +1,8 @@
 % docs/texte/40_qa/tests.tex -- chapter "Tests and Validation" (Interferosim)
-% Version: 0.2.0 (2026-10-12) -- running the tests
+% Version: 0.3.1 (2026-11-23) -- table as longtable (overfull lines)
+%   0.3.0 (2026-11-23) -- all eight test modules listed; selection by
+%   name (-k), listing (--collect-only), uv run
+%   0.2.0 (2026-10-12) -- running the tests
 %   0.1.0: placeholder
 % ================================================================
 \label{ch:tests}
@@ -17,24 +20,65 @@ pytest -q                                   # all tests, short output
 pytest -v                                   # one line per test
 pytest tests/test_sky.py -v                 # one module
 pytest tests/test_sky.py::test_render_conserves_flux -v   # one test
+pytest -k "hogbom or wiener" -v             # tests whose name matches
+pytest --collect-only -q                    # list the tests, run none
 .venv\Scripts\python.exe -m pytest -q       # without activating .venv
+uv run pytest -q                            # via uv, without activating
 \end{lstlisting}
+% 0.3.0: the folder tests/ is set as testpaths in pyproject.toml, so a
+% plain "pytest" finds all modules.
+Without a path, pytest collects all modules in \texttt{tests/}; this
+folder is set as \texttt{testpaths} in \texttt{pyproject.toml}. With
+\texttt{-k}, a part of a test name or a boolean expression of names
+selects the tests.
+
 The tests are run before every commit; a release is only made when all
 tests pass.
 
 \section{Current tests}
 
-\begin{center}
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{9.5cm}@{}}
+% 0.3.0: table extended from two to all eight modules of tests/
+% 0.3.1: longtable (may break across pages; as a tabular in a centre
+%   environment the table was higher than the page)
+\begin{longtable}{@{}l>{\raggedright\arraybackslash}p{8.4cm}@{}}
 \toprule
 File & Content \\
 \midrule
+\endfirsthead
+\toprule
+File & Content \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
 \texttt{tests/test\_import.py} & package version, import of all
   sub-packages, constants, all configuration files readable \\
 \texttt{tests/test\_sky.py} & AAS6 file format and JSON round trip,
   demo field, flux conservation of the rendering, pixel positions,
   visibilities (analytic formulas, FFT of the rendered image, first null
   of the disc), map functions, command line tool \\
-\bottomrule
-\end{tabular}
-\end{center}
+\texttt{tests/test\_instrument.py} & antenna configurations, horn and
+  dish against notebook~B and \texttt{aas6sim}, primary beam at the
+  HPBW, B210 profiles (inheritance, derived quantities, limits), SEFD and
+  sensitivity formulas, ECEF and ENU coordinates, arrays of stations,
+  instrument plots \\
+\texttt{tests/test\_observation.py} & position of the Sun, transit
+  time, hour angles and elevation limit, uv-track of an east-west
+  baseline, visibility simulator against the sky model and against the IQ
+  simulation, \texttt{VisData} round trip and selection, imaging
+  (point source, phase centre shift, weightings, channel gridding),
+  azimuth/elevation, parallactic angle and precession \\
+\texttt{tests/test\_signal.py} & GMST, geometric delay, delay rate and
+  $uvw$, fractional delay, quantisation (one bit, Van Vleck,
+  efficiency), noise level, LO offset, station errors, SigMF output,
+  fringe stopping, delay-rate search, FX and XF correlator, IQ imbalance \\
+\texttt{tests/test\_solar.py} & flux of the Sun, solar transit at local
+  noon, solar transit simulation (amplitude, solar rate), disc fit \\
+\texttt{tests/test\_spectral.py} & velocity conversion, spectra of sky
+  components and their JSON round trip, LSR correction, spectral
+  visibility simulator (line at the LSR velocity, noise per channel),
+  channel images \\
+\texttt{tests/test\_deconvolution.py} & clean beam fit, H\"ogbom CLEAN
+  (point sources, restored image, window, input checks), Wiener filter,
+  reference image and RMS error, common deconvolver interface \\
+\end{longtable}
