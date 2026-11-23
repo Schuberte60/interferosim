@@ -1,5 +1,8 @@
 % docs/texte/40_qa/tests.tex -- chapter "Tests and Validation" (Interferosim)
-% Version: 0.3.1 (2026-11-23) -- table as longtable (overfull lines)
+% Version: 0.4.0 (2026-11-23) -- line coverage (pytest-cov), doctests,
+%   property-based tests (Hypothesis), representative test for the
+%   presentation; plain pytest also runs the doctests (interferosim 1.0.4)
+%   0.3.1 (2026-11-23) -- table as longtable (overfull lines)
 %   0.3.0 (2026-11-23) -- all eight test modules listed; selection by
 %   name (-k), listing (--collect-only), uv run
 %   0.2.0 (2026-10-12) -- running the tests
@@ -22,18 +25,163 @@ pytest tests/test_sky.py -v                 # one module
 pytest tests/test_sky.py::test_render_conserves_flux -v   # one test
 pytest -k "hogbom or wiener" -v             # tests whose name matches
 pytest --collect-only -q                    # list the tests, run none
+pytest --cov                                # with line coverage (0.4.0)
+pytest tests/test_properties.py -v          # property-based tests only
 .venv\Scripts\python.exe -m pytest -q       # without activating .venv
 uv run pytest -q                            # via uv, without activating
 \end{lstlisting}
 % 0.3.0: the folder tests/ is set as testpaths in pyproject.toml, so a
 % plain "pytest" finds all modules.
-Without a path, pytest collects all modules in \texttt{tests/}; this
-folder is set as \texttt{testpaths} in \texttt{pyproject.toml}. With
+% 0.4.0: testpaths also contains src/interferosim (doctests)
+%Without a path, pytest collects all modules in \texttt{tests/}; this
+%folder is set as \texttt{testpaths} in \texttt{pyproject.toml}. With
+Without a path, pytest collects all modules in \texttt{tests/} and,
+because of \texttt{--doctest-modules}, the examples in the docstrings
+of \texttt{src/interferosim/} (section~\ref{sec:doctests}); both
+folders are set as \texttt{testpaths} in \texttt{pyproject.toml}. With
 \texttt{-k}, a part of a test name or a boolean expression of names
 selects the tests.
 
 The tests are run before every commit; a release is only made when all
 tests pass.
+
+% ----------------------------------------------------------------
+% 0.4.0: coverage, doctests, property-based tests, representative test
+\section{Line coverage}\label{sec:coverage}
+\index{coverage}
+
+The line coverage of the package is measured with \texttt{pytest-cov}
+(in the extra and dependency group \texttt{test}). The settings are in
+\texttt{pyproject.toml}: \texttt{[tool.coverage.run]} measures the
+package \texttt{interferosim}, \texttt{[tool.coverage.report]} lists the
+missing lines and lets the run fail below 75\,\% (\texttt{fail\_under}).
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+pytest --cov                    # report in the terminal, fails < 75 %
+pytest --cov --cov-report=html  # HTML report in htmlcov/index.html
+\end{lstlisting}
+Version~1.0.4 reaches 91\,\% (2596 statements, 237 not executed;
+143 tests). Below average are only \texttt{plotting.imaging} and
+\texttt{plotting.observation} (plot functions used by the notebooks) and
+the command-line tool \texttt{sky.cli}.
+
+\section{Doctests}\label{sec:doctests}
+\index{doctest}
+
+Selected functions and classes carry an \texttt{Examples} section in
+their docstring, written as an interactive Python session. The examples
+document the use and the expected result and are run as tests
+(\texttt{--doctest-modules} in \texttt{addopts}, so with every
+\texttt{pytest} call):
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+>>> from interferosim.constants import HI_21CM
+>>> round(float(radio_velocity_kms(1420.0e6, HI_21CM)), 2)
+85.64
+\end{lstlisting}
+Examples are in \texttt{constants.wavelength},
+\texttt{sky.spectra} (radio velocity and its inverse),
+\texttt{sky.components} (\texttt{PointSource}, \texttt{GaussianSource}),
+\texttt{observation.geometry} (\texttt{gmst\_deg} at J2000,
+\texttt{uvw}), \texttt{instrument.sensitivity} (radiometer equation,
+visibility noise, coherence factor) and \texttt{signal.baseband} (image
+rejection, quantisation efficiency, Van Vleck correction) -- 13 doctests.
+Only the docstrings run:
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+pytest --doctest-modules src/interferosim
+\end{lstlisting}
+The values are rounded (\texttt{round}, \texttt{float}), so the output
+does not depend on the way numpy prints its scalars.
+
+\section{Property-based tests}\label{sec:hypothesis}
+\index{Hypothesis}\index{property-based test}
+
+\texttt{tests/test\_properties.py} uses Hypothesis. A test states a
+property that must hold for \emph{all} inputs of a described range;
+Hypothesis draws 100 random inputs per test and, if one fails, shrinks it
+to the simplest counterexample. Checked properties:
+\begin{itemize}
+  \item frequency $\rightarrow$ radio velocity $\rightarrow$ frequency is
+        the identity (all lines of \texttt{LINES});
+  \item the visibility of every sky component (point, Gaussian, uniform
+        disc) is Hermitian, $V(-u,-v) = V^*(u,v)$, as for every real
+        brightness distribution; $|V| \le S$ with equality for a point
+        source and $V(0,0) = S$;
+  \item the amplitude of a Gaussian decreases along every ray in the
+        uv-plane;
+  \item \texttt{component\_from\_dict(c.to\_dict()) == c} (JSON round
+        trip);
+  \item the sky basis $(\vec s_0, \vec e_E, \vec e_N)$ is orthonormal
+        and right-handed; $(u,v,w)$ is linear in the baseline and keeps
+        its length;
+  \item quantisation efficiency in $(0,1]$ and not decreasing with the
+        number of bits; the Van Vleck correction is odd, monotonic,
+        bounded and never smaller in magnitude than the 1-bit
+        correlation; the image rejection ratio is not negative and even
+        in the phase error;
+  \item the coherence factor lies in $(0,1]$ and decreases with the
+        phase rms.
+\end{itemize}
+A check with deliberately inserted errors shows that the two kinds of
+tests complement each other: a wrong sign of $\vec e_E$ in
+\texttt{sky\_basis} is found by two property tests at once, whereas a
+visibility without its phase term is still Hermitian and bounded -- that
+error is found by the doctest of \texttt{PointSource}, which expects the
+imaginary part $-1.0944$.
+
+\section{Representative test}\label{sec:representative-test}
+\index{tests!representative}
+
+For the final presentation:
+\texttt{test\_visibility\_simulator\_agrees\_with\_iq\_simulation} in
+\texttt{tests/test\_observation.py}.
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\scriptsize, frame=single]
+def test_visibility_simulator_agrees_with_iq_simulation():
+    sky = SkyModel([PointSource("p", 0.0, 0.0, 2000.0)],
+                   center=FieldCenter("p", 120.0, 45.0))
+    site = Site.from_toml(CFG / "sites" / "wilhelmsburg.toml")
+    dish = Antenna.from_toml(CFG / "antennas" / "dish_3m.toml")
+    rec = Receiver.from_toml(CFG / "receivers" / "b210.toml")
+    arr = Array(site, [Station.from_enu("A", site, 0, 0, 0, dish),
+                       Station.from_enu("B", site, 200, 50, 0, dish)],
+                receiver=rec)
+    iq = IQSimulator(sky, arr, sample_rate_sps=2e4, seed=2)
+    m = measure_visibilities(iq.simulate(20.0), iq, 20.0)
+    vd_iq = VisData.from_measurements(m, iq.fc)
+    assert abs(vd_iq.vis[0, 0] - 2000.0) < 5 * vd_iq.sigma[0, 0]
+\end{lstlisting}
+
+\paragraph*{Behaviour checked.} A point source of 2000\,Jy in the phase
+centre is observed by two 3\,m dishes 206\,m apart with the receiver
+profile of the B210. The closed simulation produces the noisy IQ samples
+of both stations (geometric delay, receiver noise), the correlator
+compensates the delay, stops the fringes and averages 20\,s. For a point
+source in the phase centre the true visibility is known exactly: real,
+$V = S = 2000\,\mathrm{Jy}$. The test checks that the measured
+visibility agrees with it within five times the noise
+$\sigma$ that the correlator itself estimates.
+
+\paragraph*{Why this test.} It joins the two ways from the sky to the
+visibilities that the design (chapter~\ref{ch:basic-design}) keeps
+apart: the closed simulation as with real hardware (\texttt{signal}) and
+the known analytic answer. It passes only if the whole chain works
+together -- sky model, array geometry, delay model, IQ simulation,
+correlator and \texttt{VisData} -- and it uses the real configuration
+files. The comparison is against the noise estimate instead of a fixed
+tolerance, so it also checks that the error bars are right. With a fixed
+seed it is reproducible and runs in about a second.
+
+\paragraph*{Bugs it would catch.}
+\begin{itemize}
+  \item a wrong sign or unit (seconds vs.\ samples) of the geometric
+        delay or its compensation: the phase runs away, the real part
+        drops far below 2000\,Jy;
+  \item missing or wrong fringe stopping: the visibility rotates during
+        the 20\,s and averages towards zero;
+  \item a wrong flux scale (SEFD, Jy-to-K factor, normalisation of the
+        correlator): the amplitude is off by a factor;
+  \item a wrong noise estimate: a too small $\sigma$ makes the test
+        fail, a too large one would show up as unrealistic error bars in
+        the notebooks.
+\end{itemize}
 
 \section{Current tests}
 
@@ -81,4 +229,9 @@ File & Content \\
 \texttt{tests/test\_deconvolution.py} & clean beam fit, H\"ogbom CLEAN
   (point sources, restored image, window, input checks), Wiener filter,
   reference image and RMS error, common deconvolver interface \\
+\texttt{tests/test\_properties.py} & property-based tests with
+  Hypothesis (section~\ref{sec:hypothesis}): spectra, sky components,
+  geometry, receive path, sensitivity \\  % 0.4.0
+docstrings in \texttt{src/interferosim/} & 13 doctests
+  (section~\ref{sec:doctests}) \\  % 0.4.0
 \end{longtable}

@@ -47,6 +47,7 @@ uses the same model.
 Version 0.4.0 (2026-10-31): first implementation.
 Version 0.9.4 (2026-11-01): lst_deg, azimuth_elevation_deg,
 parallactic_angle_deg, precess_deg.
+Version 1.0.4 (2026-11-23): executable docstring examples (doctests).
 """
 
 from __future__ import annotations
@@ -66,7 +67,16 @@ SIDEREAL_DEG_PER_S = math.degrees(OMEGA_SIDEREAL)     # 0.004178 deg/s
 
 
 def gmst_deg(unix_time_s) -> np.ndarray:
-    """Greenwich mean sidereal time in degrees for UTC given as unix time."""
+    """Greenwich mean sidereal time in degrees for UTC given as unix time.
+
+    Examples
+    --------
+    At the epoch J2000.0 (2000-01-01 12:00 UTC, unix time 946728000) GMST
+    is the constant term of the formula:
+
+    >>> round(float(gmst_deg(946728000.0)), 8)
+    280.46061837
+    """
     jd = np.asarray(unix_time_s, dtype=float) / 86400.0 + 2440587.5
     d = jd - 2451545.0
     return np.mod(280.46061837 + 360.98564736629 * d, 360.0)
@@ -121,7 +131,17 @@ def delay_rate(baseline_ecef_m, dec_deg: float, gha, l_rad: float = 0.0,
 
 
 def uvw(baseline_ecef_m, dec_deg: float, gha, wavelength_m: float) -> np.ndarray:
-    """(u, v, w) of a baseline in wavelengths, shape (3,) or (n, 3)."""
+    """(u, v, w) of a baseline in wavelengths, shape (3,) or (n, 3).
+
+    Examples
+    --------
+    A 1 km baseline along the ECEF y axis (east-west at longitude 0) seen
+    at transit (GHA 0) of a source on the equator lies completely in u:
+
+    >>> u, v, w = uvw([0.0, 1000.0, 0.0], 0.0, 0.0, 0.21)
+    >>> round(float(u), 1), round(float(v), 6), round(float(w), 6)
+    (4761.9, 0.0, 0.0)
+    """
     s0, e_e, e_n = sky_basis(dec_deg, gha)
     b = np.asarray(baseline_ecef_m, dtype=float)
     return np.stack([e_e @ b, e_n @ b, s0 @ b], axis=-1) / wavelength_m

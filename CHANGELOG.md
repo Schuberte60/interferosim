@@ -7,6 +7,25 @@ strictly higher than the previous one.
 ## [Unreleased]
 
 ### Added
+- Test requirements of the course (version 1.0.4):
+  - line coverage with `pytest-cov`: settings `[tool.coverage.*]` in
+    `pyproject.toml`, `fail_under = 75`; `pytest --cov` reports 91 %;
+  - executable examples (doctests) in the docstrings of `constants`,
+    `sky.spectra`, `sky.components`, `observation.geometry`,
+    `instrument.sensitivity` and `signal.baseband` (13 doctests); every
+    `pytest` call runs them (`--doctest-modules`, `testpaths` includes
+    `src/interferosim`);
+  - property-based tests with Hypothesis, `tests/test_properties.py`
+    (11 tests: velocity round trip, Hermitian visibilities, |V| <= S,
+    JSON round trip, orthonormal sky basis, linear uvw, quantisation,
+    Van Vleck, image rejection, coherence factor);
+  - `pytest-cov` and `hypothesis` in the extra and dependency group
+    `test`; `uv.lock` updated.
+- LaTeX documentation 1.0.3, chapter "Tests and Validation" 0.4.0:
+  sections on coverage, doctests, property-based tests and the
+  representative test for the presentation
+  (`test_visibility_simulator_agrees_with_iq_simulation`); requirements
+  N-9 to N-11 (`requirements.tex` 0.3.0); Sphinx `installation.rst` 1.0.2.
 - Sphinx documentation: chapter "Introduction and workflow"
   (`docs/sphinx/introduction.rst`), first chapter of the user guide. It
   describes the simulation branch (Sim-Measure), the measurement branch

@@ -20,6 +20,7 @@ the rest frequency f_0 of the line (:func:`radio_velocity_kms`,
 a key ``"spectrum"`` with ``{"type": ..., parameters}`` (:func:`spectrum_from_dict`).
 
 Version 0.9.0 (2026-11-01): first implementation.
+Version 1.0.4 (2026-11-23): executable docstring examples (doctests).
 """
 
 from __future__ import annotations
@@ -39,12 +40,33 @@ __all__ = ["Spectrum", "FlatSpectrum", "PowerLawSpectrum", "GaussianLineSpectrum
 
 
 def radio_velocity_kms(freq_hz, rest_hz: float) -> np.ndarray:
-    """Radio velocity v = c (f0 - f) / f0 in km/s."""
+    """Radio velocity v = c (f0 - f) / f0 in km/s.
+
+    Examples
+    --------
+    A line observed below its rest frequency recedes (positive velocity):
+
+    >>> from interferosim.constants import HI_21CM
+    >>> round(float(radio_velocity_kms(1420.0e6, HI_21CM)), 2)
+    85.64
+    >>> float(radio_velocity_kms(HI_21CM, HI_21CM))
+    0.0
+    """
     return C_KMS * (1.0 - np.asarray(freq_hz, dtype=float) / rest_hz)
 
 
 def frequency_from_velocity(v_kms, rest_hz: float) -> np.ndarray:
-    """Frequency of the radio velocity ``v_kms``: f = f0 (1 - v/c)."""
+    """Frequency of the radio velocity ``v_kms``: f = f0 (1 - v/c).
+
+    Examples
+    --------
+    Inverse of :func:`radio_velocity_kms`:
+
+    >>> from interferosim.constants import HI_21CM
+    >>> v = radio_velocity_kms(1420.0e6, HI_21CM)
+    >>> round(float(frequency_from_velocity(v, HI_21CM)) / 1e6, 6)
+    1420.0
+    """
     return rest_hz * (1.0 - np.asarray(v_kms, dtype=float) / C_KMS)
 
 

@@ -30,6 +30,7 @@ notebook D).
   s sqrt(n)/2 for strong segments; always below the coherent s sqrt(n)).
 
 Version 0.9.3 (2026-11-01): first implementation.
+Version 1.0.4 (2026-11-23): executable docstring examples (doctests).
 """
 
 from __future__ import annotations
@@ -53,13 +54,29 @@ def antenna_temperature_k(flux_jy, a_eff_m2: float):
 
 
 def radiometer_sigma_k(t_sys_k: float, bandwidth_hz: float, t_s):
-    """Radiometer equation: rms of the measured system temperature."""
+    """Radiometer equation: rms of the measured system temperature.
+
+    Examples
+    --------
+    T_sys = 100 K, 2 MHz bandwidth, 1 s integration:
+
+    >>> round(float(radiometer_sigma_k(100.0, 2e6, 1.0)), 4)
+    0.0707
+    """
     return t_sys_k / np.sqrt(bandwidth_hz * np.asarray(t_s, dtype=float))
 
 
 def visibility_sigma_jy(sefd_1: float, sefd_2: float, bandwidth_hz: float, t_s,
                         s_1: float = 0.0, s_2: float = 0.0, eta_q: float = 1.0):
-    """Noise of the real (and of the imaginary) part of one visibility [Jy]."""
+    """Noise of the real (and of the imaginary) part of one visibility [Jy].
+
+    Examples
+    --------
+    Two stations with SEFD 5000 Jy, 2 MHz bandwidth, 10 s:
+
+    >>> round(float(visibility_sigma_jy(5000.0, 5000.0, 2e6, 10.0)), 4)
+    0.7906
+    """
     return np.sqrt((sefd_1 + s_1) * (sefd_2 + s_2) / (2.0 * bandwidth_hz * np.asarray(t_s, dtype=float))) / eta_q
 
 
@@ -79,7 +96,15 @@ def image_noise_jy(sefd: float, bandwidth_hz: float, t_s: float, n_baselines: in
 
 
 def coherence_factor(sigma_phi_rad):
-    """Amplitude kept by a coherent average over a Gaussian phase scatter."""
+    """Amplitude kept by a coherent average over a Gaussian phase scatter.
+
+    Examples
+    --------
+    >>> float(coherence_factor(0.0))          # no phase noise: nothing lost
+    1.0
+    >>> round(float(coherence_factor(1.0)), 4)    # 1 rad rms
+    0.6065
+    """
     return np.exp(-0.5 * np.asarray(sigma_phi_rad, dtype=float) ** 2)
 
 

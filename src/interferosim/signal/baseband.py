@@ -19,6 +19,7 @@ notebook C).
   restores the true correlation from 1-bit data.
 
 Version 0.9.2 (2026-11-01): first implementation.
+Version 1.0.4 (2026-11-23): executable docstring examples (doctests).
 """
 
 from __future__ import annotations
@@ -47,7 +48,15 @@ def iq_imbalance(x: np.ndarray, gain_db: float = 0.0, phase_deg: float = 0.0) ->
 
 def image_rejection_db(gain_db: float, phase_deg: float) -> float:
     """Image rejection ratio [dB] of an IQ mixer with the given amplitude and
-    phase imbalance (infinite for a perfect mixer)."""
+    phase imbalance (infinite for a perfect mixer).
+
+    Examples
+    --------
+    >>> image_rejection_db(0.0, 0.0)
+    inf
+    >>> round(image_rejection_db(0.1, 1.0), 1)    # 0.1 dB, 1 degree
+    39.6
+    """
     g = 10.0 ** (gain_db / 20.0)
     p = math.radians(phase_deg)
     num = 1.0 + 2.0 * g * math.cos(p) + g * g
@@ -74,7 +83,17 @@ def quantizer_levels(bits: int, step_sigma: Optional[float] = None) -> Tuple[np.
 
 def quantization_efficiency(bits: int, step_sigma: Optional[float] = None) -> float:
     """Correlation efficiency eta_Q (weak signals) of the quantiser of
-    :func:`quantizer_levels`; 1 for an infinite number of levels."""
+    :func:`quantizer_levels`; 1 for an infinite number of levels.
+
+    Examples
+    --------
+    1 bit gives 2/pi, 2 bits at the optimum step 0.881:
+
+    >>> round(quantization_efficiency(1), 4)
+    0.6366
+    >>> round(quantization_efficiency(2), 3)
+    0.881
+    """
     t, y = quantizer_levels(bits, step_sigma)
     pdf = norm.pdf(t)                      # 0 at +-inf
     cdf = norm.cdf(t)
@@ -85,5 +104,13 @@ def quantization_efficiency(bits: int, step_sigma: Optional[float] = None) -> fl
 
 def van_vleck_1bit(rho_q) -> np.ndarray:
     """True correlation coefficient from the correlation of 1-bit (sign)
-    data: rho = sin(pi rho_q / 2) (Van Vleck, arcsine law)."""
+    data: rho = sin(pi rho_q / 2) (Van Vleck, arcsine law).
+
+    Examples
+    --------
+    >>> float(van_vleck_1bit(0.0)), float(van_vleck_1bit(1.0))
+    (0.0, 1.0)
+    >>> round(float(van_vleck_1bit(0.5)), 4)
+    0.7071
+    """
     return np.sin(0.5 * np.pi * np.asarray(rho_q, dtype=float))
