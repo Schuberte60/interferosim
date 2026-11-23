@@ -279,7 +279,13 @@ installation of Doxygen with winget.
 
 ## Licence
 
-MIT License, see `LICENSE`.
+- **Code** (`src/`, `tests/`, `configs/`, scripts, live demo `demo/`, code
+  cells of the notebooks): MIT License, see `LICENSE`.
+- **Documentation** (`docs/`), own figures and the text cells of the
+  notebooks: Creative Commons Attribution 4.0 International (CC BY 4.0),
+  see `LICENSE-docs`.
+- Third-party figures keep the licence of their source, which is named in
+  the caption.
 
 ## Author
 

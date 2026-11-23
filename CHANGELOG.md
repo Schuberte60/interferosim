@@ -17,6 +17,12 @@ strictly higher than the previous one.
   shown as overview on the start page (`docs/sphinx/index.rst`).
 
 ### Changed
+- Licence: the documentation (`docs/`), the own figures and the text cells
+  of the notebooks are released under CC BY 4.0 (new file `LICENSE-docs`);
+  the code stays under the MIT License (`LICENSE`). Updated: README,
+  `CITATION.cff` (both licences), Sphinx `conf.py` 1.0.1, LaTeX chapter
+  "Licence" (`licence.tex` 0.4.0, overview table) and "Version Control"
+  (0.1.4); LaTeX documentation 1.0.2.
 - LaTeX documentation 1.0.1, chapter "Tests and Validation"
   (`docs/texte/40_qa/tests.tex` 0.3.1): table of all eight test modules
   (was two), further calls (`-k`, `--collect-only`, `uv run pytest`);

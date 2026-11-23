@@ -1,5 +1,7 @@
 # docs/sphinx/conf.py -- Sphinx configuration of the Interferosim documentation
 # Build:  build_sphinx_docs.bat   or   python -m sphinx -b html docs/sphinx docs/sphinx/_build/html
+# Version 1.0.1 (2026-11-23): copyright line names both licences (code MIT,
+#   documentation CC BY 4.0).
 # Version 1.0.0 (2026-10-18): first version.
 
 import sys
@@ -13,7 +15,8 @@ import interferosim  # noqa: E402
 # -- Project ---------------------------------------------------------------
 project = "Interferosim"
 author = "Erich Schubert"
-copyright = "2026, Erich Schubert (MIT License)"
+# 1.0.1: was "2026, Erich Schubert (MIT License)"
+copyright = "2026, Erich Schubert (code: MIT License, documentation: CC BY 4.0)"
 release = interferosim.__version__
 version = ".".join(release.split(".")[:2])
 
