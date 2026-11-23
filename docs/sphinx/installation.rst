@@ -1,5 +1,6 @@
 .. docs/sphinx/installation.rst -- installation
 .. Version 1.0.1 (2026-11-09): pip installation and uv development environment added
+.. Version 1.0.2 (2026-11-23): coverage (pytest-cov), doctests and Hypothesis in the group "test"
 .. 2026-11-09: activation command per Windows shell (PowerShell Activate.ps1, cmd activate.bat)
 
 Installation
@@ -34,12 +35,14 @@ and reproduced exactly from the lockfile ``uv.lock`` in the repository:
 
    uv sync                  # .venv with runtime dependencies + group "dev"
    uv sync --group docs     # additionally the documentation tools
-   uv run pytest
+   uv run pytest            # tests and doctests of the docstrings
+   uv run pytest --cov      # with line coverage (fails below 75 %)
    uv run jupyter lab notebooks
 
 Development dependencies are PEP 735 dependency groups
 (``[dependency-groups]`` in ``pyproject.toml``): ``dev`` (JupyterLab,
-ipywidgets, ipykernel and the group ``test``), ``test`` (pytest, nbval) and
+ipywidgets, ipykernel and the group ``test``), ``test`` (pytest, nbval,
+pytest-cov, Hypothesis) and
 ``docs``. ``pip install .`` never installs them. After a change of
 dependencies run ``uv lock`` and commit ``uv.lock`` with ``pyproject.toml``;
 ``.venv/`` is never committed.
@@ -68,7 +71,7 @@ Optional dependency groups (``pyproject.toml``):
 ``notebooks``
    JupyterLab, ipywidgets, ipykernel
 ``test``
-   pytest, nbval
+   pytest, nbval, pytest-cov, Hypothesis
 ``docs``
    Sphinx, the Furo theme, MyST parser, sphinx-copybutton
 

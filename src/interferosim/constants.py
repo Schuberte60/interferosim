@@ -3,6 +3,9 @@
 
 Values as used in the teaching notebooks (Appendix A/B) and the project
 description.
+
+Version 1.0.4 (2026-11-23): executable example in the docstring of
+:func:`wavelength` (doctest).
 """
 
 C_LIGHT = 299_792_458.0          # m/s
@@ -30,5 +33,13 @@ LINES = {
 
 
 def wavelength(frequency_hz: float) -> float:
-    """Wavelength in metres for a frequency in Hz."""
+    """Wavelength in metres for a frequency in Hz.
+
+    Examples
+    --------
+    >>> round(wavelength(HI_21CM), 4)      # the 21 cm line
+    0.2111
+    >>> round(wavelength(OH_1665), 3)      # OH main line, 18 cm band
+    0.18
+    """
     return C_LIGHT / frequency_hz

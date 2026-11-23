@@ -23,6 +23,7 @@ Conventions
   +dx axis towards +dy -- the convention of aas6sim, kept unchanged.
 
 Version 0.2.0 (2026-10-12): first implementation.
+Version 1.0.4 (2026-11-23): executable docstring examples (doctests).
 """
 
 from __future__ import annotations
@@ -102,7 +103,20 @@ class SkyComponent(ABC):
 # ======================================================================
 @dataclass
 class PointSource(SkyComponent):
-    """Unresolved source (kind "point")."""
+    """Unresolved source (kind "point").
+
+    Examples
+    --------
+    The visibility of a point source has the amplitude of its flux on every
+    baseline; an offset from the phase centre only turns the phase:
+
+    >>> src = PointSource("p", 0.01, 0.0, 10.0)      # 0.01 deg east, 10 Jy
+    >>> v = complex(src.visibility(100.0, 0.0))      # u = 100 wavelengths
+    >>> round(abs(v), 6), round(v.imag, 4)
+    (10.0, -1.0944)
+    >>> complex(PointSource("c", 0.0, 0.0, 10.0).visibility(100.0, 0.0))
+    (10+0j)
+    """
 
     kind: ClassVar[str] = "point"
 
@@ -133,6 +147,17 @@ class GaussianSource(SkyComponent):
     """Elliptical Gaussian source (kind "gauss").
 
     ``fwhm_y_deg`` <= 0 means circular (same as ``fwhm_x_deg``).
+
+    Examples
+    --------
+    The zero-spacing visibility is the total flux; longer baselines resolve
+    the source and see less of it:
+
+    >>> g = GaussianSource("g", 0.0, 0.0, 5.0, fwhm_x_deg=0.5)
+    >>> complex(g.visibility(0.0, 0.0))
+    (5+0j)
+    >>> round(abs(complex(g.visibility(100.0, 0.0))), 4)
+    0.3324
     """
 
     fwhm_x_deg: float = 0.0

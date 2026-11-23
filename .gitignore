@@ -118,3 +118,9 @@ notebooks/Untitled*.ipynb
 docs/api/
 # Python wheels downloaded into the working tree by accident
 *.whl
+
+# 2026-11-23: output of the test tools (pytest-cov, Hypothesis)
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/

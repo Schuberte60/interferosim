@@ -7,7 +7,7 @@ teaching. A project of the University of Vienna.
 
 Repository: <https://github.com/eschubi/interferosim>
 
-**Status:** 1.0.3 — sky models (`interferosim.sky`, notebook
+**Status:** 1.0.4 — sky models (`interferosim.sky`, notebook
 `01_sky_models.ipynb` with a selector for all example skies),
 instrument (`interferosim.instrument`: horn, parabolic dish and Yagi,
 Ettus USRP B210 receiver, sites, stations and arrays; notebook
@@ -84,9 +84,11 @@ and is reproducible from the lockfile `uv.lock` in the repository:
 ```
 uv sync                  # creates .venv with the exact versions of uv.lock
                          # (runtime dependencies + group "dev": JupyterLab,
-                         #  ipywidgets, ipykernel, pytest, nbval)
+                         #  ipywidgets, ipykernel, pytest, nbval,
+                         #  pytest-cov, hypothesis)
 uv sync --group docs     # additionally Sphinx and its extensions
-uv run pytest            # tests
+uv run pytest            # tests and doctests of the docstrings
+uv run pytest --cov      # with line coverage (fails below 75 %)
 uv run jupyter lab notebooks
 ```
 
@@ -251,6 +253,7 @@ docs/sphinx/        Sphinx documentation (build: build_sphinx_docs.bat)
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[notebooks,test]"
 .venv\Scripts\python -m pytest
+.venv\Scripts\python -m pytest --cov     # line coverage
 ```
 
 Requires Python >= 3.11.
