@@ -5,6 +5,8 @@
 *.sh text eol=lf
 *.png binary
 *.pdf binary
+# 2026-11-25: FITS test data (tests/data/)
+*.fits binary
 # 2026-11-25: test certificates are stored byte for byte (no line-ending
 # conversion), so the SHA-256 checksum on a certificate stays verifiable
 certificates/** -text

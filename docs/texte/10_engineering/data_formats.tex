@@ -1,5 +1,8 @@
 % docs/texte/10_engineering/data_formats.tex -- chapter "Data Formats" (Interferosim)
-% Version: 0.4.1 (2026-11-23) -- first two tables as tabularx (overfull lines)
+% Version: 0.5.0 (2026-11-25) -- FITS input/output interferosim.io
+%   (interferosim 1.0.6): baselines, NCHAN, reading, further FITS files
+%   not taken over
+%   0.4.1 (2026-11-23) -- first two tables as tabularx (overfull lines)
 %   0.4.0 (2026-10-31) -- VisData in memory
 % 0.3.0 (2026-10-31) -- receiver keys of the device profile, base
 % 0.2.0 (2026-10-12) -- arrays: site/antenna/receiver references,
@@ -19,8 +22,8 @@ Sky models & JSON (AAS6 \texttt{sim\_sky.json}) & \texttt{configs/skies/} \\
 Antennas & TOML & \texttt{configs/antennas/} \\
 Receivers & TOML & \texttt{configs/receivers/} \\
 Sites and stations & TOML & \texttt{configs/sites/} \\
-Visibilities & FITS binary table & output of the simulation \\
-Maps, spectra, time series & FITS (from \texttt{aas6sim}) & output \\
+Visibilities & FITS binary table & \texttt{interferosim.io} \\  % 0.5.0
+Maps, spectra, time series & FITS (written by \texttt{aas6sim}) & output \\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -109,6 +112,41 @@ recognisable after any number of processing steps), \texttt{TELESCOP},
 second table \texttt{EXTNAME = FREQUENCY} holds the channel
 frequencies in Hz. A file with one channel remains identical to the
 \texttt{aas6sim} format.
+% 0.5.0: the extension is implemented; RESTFRQ, NCHAN
+\texttt{RESTFRQ} is always the first channel frequency, the frequency of
+\texttt{UU}, \texttt{VV}, \texttt{WW}; \texttt{NCHAN} gives the number of
+channels.
+
+% 0.5.0: several baselines
+\paragraph*{Extension for several baselines.} The keywords
+\texttt{NBASELIN} and \texttt{BLNAM001}, \texttt{BLNAM002}, \dots\ hold
+the names of the baselines (\texttt{"A-B"}, at most 999). With more than one
+baseline an integer column \texttt{BASELIDX} gives the baseline of each row
+(index $= nnn - 1$) and \texttt{ANT1}/\texttt{ANT2} are left out; with one
+baseline \texttt{ANT1} and \texttt{ANT2} are the two parts of its name, as
+in \texttt{aas6sim}. All extensions are additional keywords, columns or
+tables: \texttt{aas6sim} reads such a file too (without channels and
+baselines).
+
+% 0.5.0: implementation
+\paragraph*{Implementation.} \texttt{interferosim.io.write\_visibility}
+and \texttt{read\_visibility}, or the methods \texttt{VisData.to\_fits}
+and \texttt{VisData.from\_fits}:
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize, frame=single]
+from interferosim.visdata import VisData
+vd.to_fits("cyga.fits", object_name="Cyg A", meta={"tsys_k": 120.0})
+vd = VisData.from_fits("cyga.fits")   # also files of aas6sim
+\end{lstlisting}
+The keywords of \texttt{VisData.header} are written to the table header
+and read back as dictionary (\texttt{HISTORY} as list); \texttt{ORIGIN}
+(\texttt{interferosim <version>}) and \texttt{DATE} are set by the
+writer, \texttt{SIMULATD} is taken from the header (default \texttt{T}).
+The arguments \texttt{telescope}, \texttt{instrument},
+\texttt{object\_name}, \dots\ and \texttt{meta} (observation keys) are
+those of \texttt{aas6sim}. A file without \texttt{RESTFRQ} and without
+\texttt{FREQUENCY} table needs the argument \texttt{freq\_hz} when it is read.
+The header keywords come from \texttt{interferosim.io.headers}, a port of
+\texttt{aas6sim.headers}.
 
 \paragraph*{Data class in memory.} \texttt{interferosim.visdata.VisData}
 (since 0.5.0) holds the same columns as arrays -- \texttt{time\_mjd},
@@ -116,12 +154,17 @@ frequencies in Hz. A file with one channel remains identical to the
 $\times$ channels, complex), \texttt{weight} -- plus a baseline index per row
 with \texttt{baseline\_names} (\texttt{ANT1}/\texttt{ANT2} of the file), the
 channel frequencies \texttt{freq\_hz} and the header keywords as a
-dictionary. Until the FITS output of the package \texttt{io} exists,
-\texttt{save\_npz}/\texttt{load\_npz} store it losslessly.
+dictionary. % 0.5.0: FITS output exists, npz stays
+%Until the FITS output of the package \texttt{io} exists,
+%\texttt{save\_npz}/\texttt{load\_npz} store it losslessly.
+Besides FITS, \texttt{save\_npz}/\texttt{load\_npz} store it losslessly
+as NumPy archive.
 
 \section{Further FITS files}
 
-Taken over unchanged from \texttt{aas6sim}: maps (2D image with WCS,
+% 0.5.0: not taken over into interferosim.io; aas6sim writes them
+Not taken over into \texttt{interferosim.io}; \texttt{aas6sim} writes them
+in its formats: maps (2D image with WCS,
 \texttt{skymap.py}), cross-spectra cubes (\texttt{spectra.py}),
 measurement time series (\texttt{timeseries.py}) and an UVFITS export
 (\texttt{uvfits.py}, random-groups without AN/FQ tables; acceptance by

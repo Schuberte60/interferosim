@@ -7,7 +7,7 @@ teaching. A project of the University of Vienna.
 
 Repository: <https://github.com/eschubi/interferosim>
 
-**Status:** 1.0.5 — sky models (`interferosim.sky`, notebook
+**Status:** 1.0.6 — sky models (`interferosim.sky`, notebook
 `01_sky_models.ipynb` with a selector for all example skies),
 instrument (`interferosim.instrument`: horn, parabolic dish and Yagi,
 Ettus USRP B210 receiver, sites, stations and arrays; notebook
@@ -30,6 +30,8 @@ channel maps; notebook `09_spectral_lines.ipynb`). The simulation chain
 00–09 is complete; the theory notebooks A (fringes), B (Fourier
 transformation and correlation), C (sampling and complex baseband), D
 (noise and sensitivity) and E (coordinate frames) are available.
+Visibilities are written and read as FITS in the format of `aas6sim`
+(`VisData.to_fits` / `VisData.from_fits`, `interferosim.io`; since 1.0.6).
 
 **Live demo:** `demo/interferometer_demo.html` – a self-contained page
 (open it in any browser, no installation): a source above and to the right
@@ -283,7 +285,7 @@ the theory notebooks.
 | SDR signal simulation (IQ samples per station), FX correlator | `interferosim.signal` |
 | Gridding, weighting, dirty image and beam | `interferosim.imaging` |
 | Högbom-CLEAN, Wiener filter, restoration | `interferosim.deconvolution` |
-| FITS input/output | `interferosim.io` |
+| FITS input/output (visibilities, format of `aas6sim`) | `interferosim.io` |
 
 ## Repository layout
 

@@ -21,12 +21,15 @@ attribute          shape                        meaning
 =================  ===========================  ==================================
 
 ``header`` holds descriptive keywords (telescope, object, RA/Dec,
-``SIMULATD`` ...) as a plain dictionary; the FITS input/output follows in
-the package ``io``. :meth:`save_npz` / :meth:`load_npz` store the data
-losslessly in the meantime.
+``SIMULATD`` ...) as a plain dictionary. :meth:`to_fits` / :meth:`from_fits`
+write and read the FITS format of ``aas6sim`` (package ``io``, module
+:mod:`interferosim.io.visibility`); :meth:`save_npz` / :meth:`load_npz`
+store the data losslessly as NumPy archive (they were the only storage until
+1.0.6 and remain available).
 
 Version 0.5.0 (2026-10-31): first implementation (design: chapter "Basic
 Design", module visdata).
+Version 1.0.6 (2026-11-25): to_fits / from_fits (requirement F-DAT-2).
 """
 
 from __future__ import annotations
@@ -156,6 +159,18 @@ class VisData:
                        freq_hz=d["freq_hz"],
                        baseline_names=json.loads(str(d["baseline_names"])),
                        header=json.loads(str(d["header"])))
+
+    def to_fits(self, path: Union[str, Path], **kwargs: Any) -> Path:
+        """Write as FITS file (see :func:`interferosim.io.write_visibility`)."""
+        from .io.visibility import write_visibility
+        return write_visibility(path, self, **kwargs)
+
+    @classmethod
+    def from_fits(cls, path: Union[str, Path], **kwargs: Any) -> "VisData":
+        """Read a FITS file of Interferosim or aas6sim (see
+        :func:`interferosim.io.read_visibility`)."""
+        from .io.visibility import read_visibility
+        return read_visibility(path, **kwargs)
 
     @classmethod
     def from_measurements(cls, meas: Dict[str, dict], freq_hz: float,

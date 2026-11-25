@@ -7,6 +7,19 @@ strictly higher than the previous one.
 ## [Unreleased]
 
 ### Added
+- FITS input/output (version 1.0.6, requirement F-DAT-2):
+  `interferosim.io.write_visibility` / `read_visibility` and
+  `VisData.to_fits` / `VisData.from_fits`. Format of `aas6sim` 1.3.1
+  (`visibility.py`, table `VISIBILITY`, `SIMULATD`); a file with one channel
+  and one baseline is read by `aas6sim` unchanged. Extensions: channel
+  vectors plus table `FREQUENCY`, baseline names `NBASELIN`/`BLNAMnnn` and
+  column `BASELIDX`. `interferosim.io.headers`: port of `aas6sim.headers`
+  (`ORIGIN = "interferosim <version>"`). Tests: `tests/test_io.py`
+  (10 tests, one skipped without `aas6sim`) with the fixture
+  `tests/data/aas6sim_1.3.1_visibility.fits` written by aas6sim 1.3.1;
+  2 doctests. `save_npz`/`load_npz` stay. Documentation: "Data Formats"
+  0.5.0, "Requirements" 0.4.2, "Tests and Validation" 0.6.1, LaTeX
+  documentation 1.0.7; README, Sphinx.
 - Notebook runs with nbval (requirement N-4): `pytest --nbval-lax
   --current-env notebooks` runs all 15 notebooks (132 code cells, about two
   minutes; outputs are not compared). Separate from the plain `pytest` call.

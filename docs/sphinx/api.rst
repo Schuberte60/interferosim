@@ -1,4 +1,5 @@
 .. docs/sphinx/api.rst -- API reference (generated from the docstrings)
+.. 2026-11-25: interferosim.io (FITS visibilities) moved from "Stages in preparation" to its own section
 
 API reference
 =============
@@ -91,6 +92,16 @@ interferosim.visdata
 
 .. automodule:: interferosim.visdata
 
+interferosim.io
+---------------
+
+.. automodule:: interferosim.io
+   :no-members:
+
+.. automodule:: interferosim.io.visibility
+
+.. automodule:: interferosim.io.headers
+
 interferosim.signal
 -------------------
 
@@ -158,7 +169,5 @@ interferosim.constants
 
 Stages in preparation
 ---------------------
-
-.. automodule:: interferosim.io
 
 .. automodule:: interferosim.widgets
