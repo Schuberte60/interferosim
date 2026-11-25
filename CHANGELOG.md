@@ -46,6 +46,9 @@ strictly higher than the previous one.
   shown as overview on the start page (`docs/sphinx/index.rst`).
 
 ### Changed
+- README, "Quick start": expected output of `interferosim-sky` and a
+  first result in Python (visibility of Cygnus A over the baseline, SEFD of
+  a 3 m dish with the B210) with expected output and an explanation.
 - LaTeX documentation 1.0.5, chapter "Requirements" (`requirements.tex`
   0.4.0): status of all requirements brought up to date with the code
   (most functional requirements were still marked "open"); new status
