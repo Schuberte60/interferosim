@@ -1,0 +1,173 @@
+{
+ "nr": "TC_20261125_124838Z_interferosim_feature-test-certificate_a678808_911e7a",
+ "titel": "Test certificate",
+ "projekt": "interferosim",
+ "aussteller": "schubee",
+ "ausgestellt_utc": "2026-11-25T12:48:38+00:00",
+ "werkzeug": "testzertifikat.py 1.1.0",
+ "format": "JUnit-XML",
+ "protokoll_datei": "junit.xml",
+ "kopie": "testprotokoll.xml",
+ "sha256": "911e7a4d97a26f13beefa6c0e7ae394678ee7f1f89066a4eef7f8e1242b86e71",
+ "min_tests": 1,
+ "streng": false,
+ "lauf": {
+  "zeit_utc": "2026-11-25T12:48:12+00:00",
+  "dauer_s": 18.418,
+  "branch": "feature/test-certificate",
+  "commit": "a678808",
+  "geaendert": null,
+  "python": null,
+  "rechner": "Schubee-Asus1",
+  "system": null,
+  "aufruf": null,
+  "auswahl": null
+ },
+ "auswertung": {
+  "bestanden": true,
+  "gruende": [],
+  "gesamt": 153,
+  "zaehler": {
+   "ok": 153,
+   "fehler": 0,
+   "error": 0,
+   "skip": 0,
+   "xfail": 0,
+   "xpass": 0
+  },
+  "je_datei": {
+   "tests.test_certificate": {
+    "ok": 10,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_deconvolution": {
+    "ok": 10,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_import": {
+    "ok": 11,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_instrument": {
+    "ok": 25,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_observation": {
+    "ok": 13,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_properties": {
+    "ok": 11,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_signal": {
+    "ok": 20,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_sky": {
+    "ok": 27,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_solar": {
+    "ok": 4,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "tests.test_spectral": {
+    "ok": 9,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.constants": {
+    "ok": 1,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.instrument.sensitivity": {
+    "ok": 3,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.observation.geometry": {
+    "ok": 2,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.signal.baseband": {
+    "ok": 3,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.sky.components": {
+    "ok": 2,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   },
+   "src.interferosim.sky.spectra": {
+    "ok": 2,
+    "fehler": 0,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0
+   }
+  },
+  "probleme": []
+ },
+ "sprache": "en",
+ "pdf": true,
+ "pdf_status": "ok"
+}

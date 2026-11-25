@@ -1,0 +1,73 @@
+% zertifikat.tex -- erzeugt von tools/testzertifikat.py 1.1.0
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\IfFileExists{english.ldf}{\usepackage[english]{babel}}{}
+\usepackage[margin=2cm]{geometry}
+\usepackage{booktabs,longtable,array}
+\usepackage[table]{xcolor}
+\usepackage{seqsplit}
+\definecolor{gruen}{RGB}{32,128,64}\definecolor{rot}{RGB}{176,32,32}
+\pagestyle{plain}\setlength{\parindent}{0pt}
+\begin{document}
+\begin{center}{\Huge\bfseries Test certificate}\\[4pt]
+{\Large interferosim}\\[14pt]
+\fcolorbox{gruen}{white}{\parbox{0.6\textwidth}{\centering\vspace{4pt}{\Huge\bfseries\color{gruen}PASSED}\vspace{4pt}}}
+\end{center}\vspace{10pt}
+\begin{longtable}{>{\bfseries\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{11cm}}
+\toprule
+Certificate no. & TC\_20261125\_124838Z\_interferosim\_feature-test-certificate\_a678808\_911e7a \\
+Project & interferosim \\
+Issued (UTC) & 2026-11-25T12:48:38+00:00 \\
+Issued by & schubee \\
+Test run (UTC) & 2026-11-25T12:48:12+00:00 \\
+Duration & 18.4 s \\
+Branch / commit & feature/test-certificate / a678808 \\
+Uncommitted changes & – \\
+Python / system & – / – \\
+Host & Schubee-Asus1 \\
+Command & – \\
+Selection (markers) & all \\
+Test log & junit.xml (JUnit-XML) \\
+SHA-256 of the test log & \texttt{\seqsplit{911e7a4d97a26f13beefa6c0e7ae394678ee7f1f89066a4eef7f8e1242b86e71}} \\
+Criteria & at least 1 test(s), no failures \\
+Result & PASSED \\
+\bottomrule
+\end{longtable}
+\section*{Summary}
+\begin{tabular}{lr}
+\toprule
+Tests in total & 153 \\ \midrule
+passed & 153 \\
+failed & 0 \\
+error (setup) & 0 \\
+skipped & 0 \\
+expected failure & 0 \\
+unexpectedly passed & 0 \\
+\bottomrule
+\end{tabular}
+\section*{Result per test file}
+\begin{longtable}{p{8.4cm}rrrrrr}
+\toprule
+File & passed & failed & error & skipped & xfail & xpass \\ \midrule \endhead
+\texttt{\seqsplit{tests.test\_certificate}} & 10 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_deconvolution}} & 10 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_import}} & 11 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_instrument}} & 25 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_observation}} & 13 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_properties}} & 11 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_signal}} & 20 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_sky}} & 27 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_solar}} & 4 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{tests.test\_spectral}} & 9 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.constants}} & 1 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.instrument.sensitivity}} & 3 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.observation.geometry}} & 2 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.signal.baseband}} & 3 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.sky.components}} & 2 & 0 & 0 & 0 & 0 & 0 \\
+\texttt{\seqsplit{src.interferosim.sky.spectra}} & 2 & 0 & 0 & 0 & 0 & 0 \\
+\bottomrule
+\end{longtable}
+\vfill{\small The SHA-256 checksum refers to the enclosed file \texttt{testprotokoll.xml}; it shows that the underlying test log is unchanged. Created with \texttt{testzertifikat.py} 1.1.0.}
+\end{document}

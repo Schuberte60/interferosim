@@ -1,0 +1,2 @@
+certificate_no;issued_utc;project;result;test_run_utc;branch;commit;uncommitted;total;passed;failed;error;skipped;xfail;xpass;duration_s;sha256;pdf;issuer
+TC_20261125_124838Z_interferosim_feature-test-certificate_a678808_911e7a;2026-11-25T12:48:38+00:00;interferosim;PASSED;2026-11-25T12:48:12+00:00;feature/test-certificate;a678808;–;153;153;0;0;0;0;0;18.418;911e7a4d97a26f13beefa6c0e7ae394678ee7f1f89066a4eef7f8e1242b86e71;yes;schubee
