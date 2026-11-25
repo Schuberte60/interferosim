@@ -1,5 +1,6 @@
 % docs/texte/10_engineering/requirements.tex -- chapter "Requirements" (Interferosim)
-% Version: 0.4.0 (2026-11-25) -- status brought up to date with the code
+% Version: 0.4.1 (2026-11-25) -- N-4 done (notebook runs with nbval)
+%   0.4.0 (2026-11-25) -- status brought up to date with the code
 %   (interferosim 1.0.5); new status "partly"; notes on the open points
 %   0.3.0 (2026-11-23) -- N-9 to N-11: coverage, doctests,
 %   property-based tests (requirements of the course)
@@ -99,7 +100,7 @@ N-2 & Python $\geq$ 3.11; dependencies numpy, scipy, astropy,
 N-3 & Runs on Windows, Linux and macOS, locally, on JupyterHub and on
   Binder. & 5 & open \\
 N-4 & Every module is covered by unit tests; the notebooks are run
-  automatically (nbval). & 5 & open \\
+  automatically (nbval). & 5 & done \\
 N-5 & Code, notebooks and documentation in English; conventions of
   chapter \enquote{Development Guidelines}. & 1 & done \\
 N-6 & Three-part versioning, CHANGELOG, tagged releases. & 1 & done \\
@@ -131,7 +132,9 @@ N-11 & Property-based tests with Hypothesis. & 5 & done \\
         \texttt{interferosim.widgets} is still empty.
   \item \textbf{N-3} (open): tested on Windows and Linux; macOS,
         JupyterHub and Binder are not tested yet.
-  \item \textbf{N-4} (open): all modules have unit tests (coverage
-        91\,\%); the automatic notebook runs with nbval are not set up yet.
+% 0.4.1: N-4 done -- all 15 notebooks run with nbval (chapter "Tests and
+% Validation"); the former entry:
+%  \item \textbf{N-4} (open): all modules have unit tests (coverage
+%        91\,\%); the automatic notebook runs with nbval are not set up yet.
 \end{itemize}
 

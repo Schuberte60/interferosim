@@ -7,6 +7,12 @@ strictly higher than the previous one.
 ## [Unreleased]
 
 ### Added
+- Notebook runs with nbval (requirement N-4): `pytest --nbval-lax
+  --current-env notebooks` runs all 15 notebooks (132 code cells, about two
+  minutes; outputs are not compared). Separate from the plain `pytest` call.
+  Documentation: "Tests and Validation" 0.6.0 (section "Notebook runs"),
+  "Requirements" 0.4.1, LaTeX documentation 1.0.6; README, Sphinx
+  `installation.rst` 1.0.3.
 - Test certificate (version 1.0.5): `tools/testzertifikat.py` 1.1.0, taken
   over from AAS7 (Python standard library only, usable in any project).
   New in 1.1.0: `--sprache de|en` (German default, output identical to
