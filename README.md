@@ -89,6 +89,7 @@ uv sync                  # creates .venv with the exact versions of uv.lock
 uv sync --group docs     # additionally Sphinx and its extensions
 uv run pytest            # tests and doctests of the docstrings
 uv run pytest --cov      # with line coverage (fails below 75 %)
+uv run pytest --nbval-lax --current-env notebooks   # run all notebooks (about 2 min)
 uv run pytest --junitxml=logs/tests/junit.xml   # test log for a certificate
 uv run python tools/testzertifikat.py --sprache en   # test certificate
 uv run jupyter lab notebooks
@@ -305,6 +306,7 @@ python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[notebooks,test]"
 .venv\Scripts\python -m pytest
 .venv\Scripts\python -m pytest --cov     # line coverage
+.venv\Scripts\python -m pytest --nbval-lax --current-env notebooks   # all notebooks
 .venv\Scripts\python -m pytest --junitxml=logs/tests/junit.xml
 .venv\Scripts\python tools\testzertifikat.py --sprache en   # test certificate
 ```

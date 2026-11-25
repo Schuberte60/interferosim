@@ -1,6 +1,7 @@
 .. docs/sphinx/installation.rst -- installation
 .. Version 1.0.1 (2026-11-09): pip installation and uv development environment added
 .. Version 1.0.2 (2026-11-23): coverage (pytest-cov), doctests and Hypothesis in the group "test"
+.. Version 1.0.3 (2026-11-25): notebook runs with nbval
 .. 2026-11-09: activation command per Windows shell (PowerShell Activate.ps1, cmd activate.bat)
 
 Installation
@@ -37,6 +38,7 @@ and reproduced exactly from the lockfile ``uv.lock`` in the repository:
    uv sync --group docs     # additionally the documentation tools
    uv run pytest            # tests and doctests of the docstrings
    uv run pytest --cov      # with line coverage (fails below 75 %)
+   uv run pytest --nbval-lax --current-env notebooks   # run all notebooks
    uv run jupyter lab notebooks
 
 Development dependencies are PEP 735 dependency groups
