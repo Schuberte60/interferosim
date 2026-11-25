@@ -1,5 +1,7 @@
 % docs/texte/40_qa/tests.tex -- chapter "Tests and Validation" (Interferosim)
-% Version: 0.6.0 (2026-11-25) -- notebook runs with nbval (N-4)
+% Version: 0.6.1 (2026-11-25) -- tests/test_io.py (FITS input/output),
+%   15 doctests (interferosim 1.0.6)
+%   0.6.0 (2026-11-25) -- notebook runs with nbval (N-4)
 %   0.5.0 (2026-11-25) -- test certificate (tools/testzertifikat.py
 %   1.1.0), tests/test_certificate.py (interferosim 1.0.5)
 %   0.4.0 (2026-11-23) -- line coverage (pytest-cov), doctests,
@@ -90,7 +92,9 @@ Examples are in \texttt{constants.wavelength},
 \texttt{observation.geometry} (\texttt{gmst\_deg} at J2000,
 \texttt{uvw}), \texttt{instrument.sensitivity} (radiometer equation,
 visibility noise, coherence factor) and \texttt{signal.baseband} (image
-rejection, quantisation efficiency, Van Vleck correction) -- 13 doctests.
+rejection, quantisation efficiency, Van Vleck correction)
+% 0.6.1: io.headers and io.visibility, 13 -> 15 doctests
+and \texttt{io.headers}, \texttt{io.visibility} (FITS round trip) -- 15 doctests.
 Only the docstrings run:
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 pytest --doctest-modules src/interferosim
@@ -318,7 +322,12 @@ File & Content \\
 \texttt{tests/test\_properties.py} & property-based tests with
   Hypothesis (section~\ref{sec:hypothesis}): spectra, sky components,
   geometry, receive path, sensitivity \\  % 0.4.0
-docstrings in \texttt{src/interferosim/} & 13 doctests
+\texttt{tests/test\_io.py} & FITS input/output: round trips with
+  channels and baselines, header and \texttt{HISTORY}, a file of
+  \texttt{aas6sim} 1.3.1 (\texttt{tests/data/}) read and its layout
+  reproduced, reading by \texttt{aas6sim} (skipped if not installed),
+  \texttt{SIMULATD}, error cases \\  % 0.6.1
+docstrings in \texttt{src/interferosim/} & 15 doctests
   (section~\ref{sec:doctests}) \\  % 0.4.0
 \texttt{tests/test\_certificate.py} & test certificate tool
   (section~\ref{sec:certificate}): passed/failed, checksum, criteria,

@@ -1,5 +1,7 @@
 % docs/texte/10_engineering/requirements.tex -- chapter "Requirements" (Interferosim)
-% Version: 0.4.1 (2026-11-25) -- N-4 done (notebook runs with nbval)
+% Version: 0.4.2 (2026-11-25) -- F-DAT-2 done (FITS input/output,
+%   interferosim 1.0.6)
+%   0.4.1 (2026-11-25) -- N-4 done (notebook runs with nbval)
 %   0.4.0 (2026-11-25) -- status brought up to date with the code
 %   (interferosim 1.0.5); new status "partly"; notes on the open points
 %   0.3.0 (2026-11-23) -- N-9 to N-11: coverage, doctests,
@@ -15,7 +17,8 @@ notebooks~A and~B, the AAS6 simulation chain and the decisions of
 chapter~\ref{ch:basic-design}. Every requirement has an identifier;
 tests and chapters refer to it. \emph{Phase} is the phase of the
 development plan in which the requirement is implemented; \emph{Status}:
-done, partly, open (status of interferosim 1.0.5, 25.11.2026).
+done, partly, open (status of interferosim 1.0.6, 25.11.2026).
+% 0.4.2: status line 1.0.5 -> 1.0.6
 
 \section{Functional requirements}
 
@@ -73,7 +76,7 @@ F-DEC-3 & Comparison metrics (effective beam width, RMS error against a
 F-DAT-1 & One visibility data class (\texttt{VisData}) with frequency
   axis for simulated and measured data. & 2 & done \\
 F-DAT-2 & FITS input/output compatible with \texttt{aas6sim}
-  (simulated data marked by \texttt{SIMULATD = T}). & 2 & open \\
+  (simulated data marked by \texttt{SIMULATD = T}). & 2 & done \\  % 0.4.2: open -> done
 F-UI-1 & Interactive notebooks (ipywidgets), one per topic; usable
   without programming knowledge. & 4 & partly \\
 F-UI-2 & Notebooks~A (Wiener filter vs.\ CLEAN) and~B (the Sun as a
@@ -124,9 +127,15 @@ N-11 & Property-based tests with Hypothesis. & 5 & done \\
         (\texttt{observation.geometry}, \texttt{signal}); a model of the
         adding and the multiplying interferometer is not yet part of the
         package (only the live demo shows the fringes).
-  \item \textbf{F-DAT-2} (open): \texttt{VisData} is saved as
-        \texttt{.npz}; FITS input/output compatible with \texttt{aas6sim}
-        (\texttt{interferosim.io}) is still missing.
+% 0.4.2: F-DAT-2 done -- interferosim.io writes and reads the visibility
+% format of aas6sim (chapter "Data Formats"); the former entry:
+%  \item \textbf{F-DAT-2} (open): \texttt{VisData} is saved as
+%        \texttt{.npz}; FITS input/output compatible with \texttt{aas6sim}
+%        (\texttt{interferosim.io}) is still missing.
+  \item \textbf{FITS files besides visibilities} (note to F-DAT-2, done):
+        maps, cross-spectra cubes, time series and UVFITS are not taken
+        over into \texttt{interferosim.io}; \texttt{aas6sim} writes them
+        (chapter~\ref{ch:data-formats}).
   \item \textbf{F-UI-1} (partly): every notebook except~00 has its own
         ipywidgets controls; the common front end
         \texttt{interferosim.widgets} is still empty.

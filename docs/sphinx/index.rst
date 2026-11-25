@@ -1,6 +1,7 @@
 .. docs/sphinx/index.rst -- start page of the Interferosim documentation
 .. 2026-11-16: chapter "Introduction and workflow" (introduction.rst) added to the user guide;
    workflow figure as overview at the beginning; status paragraph brought up to date
+.. 2026-11-25: status paragraph: FITS visibilities in interferosim.io (1.0.6)
 
 Interferosim
 ============
@@ -39,8 +40,9 @@ transit, Sun and spectral lines), the signal simulation and the FX correlator
 deconvolution with Högbom-CLEAN and Wiener filter
 (:mod:`interferosim.deconvolution`) and the plots
 (:mod:`interferosim.plotting`). The teaching notebooks 00--09 and A--E are
-available (:doc:`notebooks`). Still open: the input/output package
-:mod:`interferosim.io` (FITS, UVFITS, reading real B210 recordings) and the
+available (:doc:`notebooks`). Visibilities are written and read as FITS in
+the format of ``aas6sim`` (:mod:`interferosim.io`). Still open: further
+input/output (UVFITS, maps, reading real B210 recordings) and the
 ipywidgets front end :mod:`interferosim.widgets`.
 
 .. toctree::

@@ -1,4 +1,5 @@
 .. docs/sphinx/interferometer.rst -- the radio interferometer in brief
+.. 2026-11-25: interferosim.io no longer "in preparation" (FITS visibilities)
 
 The radio interferometer
 ========================
@@ -106,7 +107,7 @@ Processing chain of Interferosim
    * - Högbom-CLEAN, Wiener filter, restoration
      - :mod:`interferosim.deconvolution`
    * - FITS input/output
-     - :mod:`interferosim.io` (in preparation)
+     - :mod:`interferosim.io` (visibilities)
 
 The full derivations are in the LaTeX documentation (``docs/interferosim.tex``,
 part "Theory").
