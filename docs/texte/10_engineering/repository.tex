@@ -1,5 +1,6 @@
 % docs/texte/10_engineering/repository.tex -- chapter "Repository Structure" (Interferosim)
-% Version: 0.2.1 (2026-11-23) -- table as tabularx (overfull line)
+% Version: 0.3.0 (2026-11-25) -- tools/ and certificates/ (interferosim 1.0.5)
+%   0.2.1 (2026-11-23) -- table as tabularx (overfull line)
 %   0.2.0 (2026-11-03) -- signal/, demo/, API documentation added (interferosim 1.0.0)
 %   0.1.0 (2026-10-12)
 % ================================================================
@@ -22,6 +23,11 @@
 \texttt{notebooks/} & one notebook per topic (00--09, theory A--E) \\
 \texttt{demo/} & live two-element interferometer demo (HTML) \\
 \texttt{tests/} & pytest and nbval \\
+% 0.3.0: test certificates (chapter "Tests and Validation")
+\texttt{tools/} & test certificate tool \texttt{testzertifikat.py} \\
+\texttt{certificates/} & test certificates, one folder each; history in
+  \texttt{verlauf.csv} \\
+\texttt{logs/tests/} & test logs (JUnit XML), not under version control \\
 \texttt{binder/} & environment for Binder/JupyterHub \\
 \texttt{docs/} & this documentation (\LaTeX) \\
 \texttt{\quad api/}, \texttt{sphinx/} & API documentation (Doxygen, Sphinx) \\

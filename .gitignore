@@ -124,3 +124,11 @@ docs/api/
 .coverage.*
 htmlcov/
 .hypothesis/
+
+# 2026-11-25: test logs (pytest --junitxml=logs/tests/...). The test
+# certificates in certificates/ stay under version control (history).
+logs/
+# LaTeX auxiliary files of a certificate whose PDF failed
+certificates/*/zertifikat.aux
+certificates/*/zertifikat.log
+certificates/*/zertifikat.out

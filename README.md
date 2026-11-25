@@ -7,7 +7,7 @@ teaching. A project of the University of Vienna.
 
 Repository: <https://github.com/eschubi/interferosim>
 
-**Status:** 1.0.4 — sky models (`interferosim.sky`, notebook
+**Status:** 1.0.5 — sky models (`interferosim.sky`, notebook
 `01_sky_models.ipynb` with a selector for all example skies),
 instrument (`interferosim.instrument`: horn, parabolic dish and Yagi,
 Ettus USRP B210 receiver, sites, stations and arrays; notebook
@@ -89,6 +89,8 @@ uv sync                  # creates .venv with the exact versions of uv.lock
 uv sync --group docs     # additionally Sphinx and its extensions
 uv run pytest            # tests and doctests of the docstrings
 uv run pytest --cov      # with line coverage (fails below 75 %)
+uv run pytest --junitxml=logs/tests/junit.xml   # test log for a certificate
+uv run python tools/testzertifikat.py --sprache en   # test certificate
 uv run jupyter lab notebooks
 ```
 
@@ -242,6 +244,8 @@ src/interferosim/   Python package (core, independent of the user interface)
 configs/            antenna types, receivers, sites (TOML)
 notebooks/          one notebook per topic
 tests/              pytest and nbval
+tools/              test certificate tool (testzertifikat.py, standard library only)
+certificates/       test certificates, one folder each, history in verlauf.csv
 binder/             environment for Binder / JupyterHub
 docs/               LaTeX documentation (build: cd docs && latexmk)
 docs/sphinx/        Sphinx documentation (build: build_sphinx_docs.bat)
@@ -254,9 +258,31 @@ python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[notebooks,test]"
 .venv\Scripts\python -m pytest
 .venv\Scripts\python -m pytest --cov     # line coverage
+.venv\Scripts\python -m pytest --junitxml=logs/tests/junit.xml
+.venv\Scripts\python tools\testzertifikat.py --sprache en   # test certificate
 ```
 
 Requires Python >= 3.11.
+
+## Test certificate
+
+`tools/testzertifikat.py` turns a test log into a test certificate. The tool
+uses only the Python standard library and is shared with other projects
+(AAS7); `--sprache en` gives English output.
+
+```
+pytest --junitxml=logs/tests/junit.xml
+python tools/testzertifikat.py --sprache en
+```
+
+Without `--log` the tool takes the newest test log in `logs/tests/`. Each
+certificate gets its own folder in `certificates/`, named
+`TC_<UTC time>_<project>_<branch>_<commit>_<checksum>`, with
+`zertifikat.html`, `zertifikat.tex`, `zertifikat.pdf` (if `pdflatex` is
+installed), `zertifikat.json` and an unchanged copy of the test log; a line
+in `certificates/verlauf.csv` keeps the history. The result is PASSED when
+at least one test ran and none failed (`--min-tests N`, `--streng` for
+stricter rules). Exit code: 0 passed, 1 failed, 2 no or unreadable log.
 
 ## Documentation (Sphinx)
 
