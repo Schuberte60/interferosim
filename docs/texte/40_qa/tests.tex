@@ -1,5 +1,7 @@
 % docs/texte/40_qa/tests.tex -- chapter "Tests and Validation" (Interferosim)
-% Version: 0.4.0 (2026-11-23) -- line coverage (pytest-cov), doctests,
+% Version: 0.5.0 (2026-11-25) -- test certificate (tools/testzertifikat.py
+%   1.1.0), tests/test_certificate.py (interferosim 1.0.5)
+%   0.4.0 (2026-11-23) -- line coverage (pytest-cov), doctests,
 %   property-based tests (Hypothesis), representative test for the
 %   presentation; plain pytest also runs the doctests (interferosim 1.0.4)
 %   0.3.1 (2026-11-23) -- table as longtable (overfull lines)
@@ -26,6 +28,7 @@ pytest tests/test_sky.py::test_render_conserves_flux -v   # one test
 pytest -k "hogbom or wiener" -v             # tests whose name matches
 pytest --collect-only -q                    # list the tests, run none
 pytest --cov                                # with line coverage (0.4.0)
+pytest --junitxml=logs/tests/junit.xml      # test log for a certificate (0.5.0)
 pytest tests/test_properties.py -v          # property-based tests only
 .venv\Scripts\python.exe -m pytest -q       # without activating .venv
 uv run pytest -q                            # via uv, without activating
@@ -183,6 +186,52 @@ seed it is reproducible and runs in about a second.
         the notebooks.
 \end{itemize}
 
+% ----------------------------------------------------------------
+% 0.5.0: test certificate
+\section{Test certificate}\label{sec:certificate}
+\index{test certificate}
+
+\texttt{tools/testzertifikat.py} turns a test log into a test
+certificate. The tool uses only the Python standard library and imports
+nothing from the package, so the same file serves other projects as well
+(it comes from AAS7); version~1.1.0 added English output
+(\texttt{--sprache en}; German stays the default) and the JUnit XML log
+of pytest as default input.
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+pytest --junitxml=logs/tests/junit.xml
+python tools/testzertifikat.py --sprache en
+\end{lstlisting}
+Without \texttt{--log} the tool takes the newest test log in
+\texttt{logs/tests/} (an AAS7 JSON log \texttt{pytest\_*.json} first,
+otherwise the newest \texttt{*.xml}). Further options:
+\texttt{--min-tests N}, \texttt{--streng} (also no uncommitted state and no
+unexpectedly passed test), \texttt{--titel}, \texttt{--aussteller},
+\texttt{--ziel}, \texttt{--kein-pdf}, \texttt{--quiet}.
+
+\paragraph*{Result.} PASSED when at least \texttt{--min-tests} tests
+(default~1) ran and none failed or had an error in its setup; skipped
+tests and expected failures do not count as failures. Exit code 0 PASSED,
+1 FAILED, 2 no or unreadable test log.
+
+\paragraph*{Storage and history.} Every certificate gets its own folder in
+\texttt{certificates/}, which is never overwritten:
+\texttt{TC\_<UTC time>Z\_<project>\_<branch>\_<commit>\_<checksum>}, the
+last part being the first six characters of the SHA-256 checksum of the
+test log. The folder contains \texttt{zertifikat.html} (readable without
+further programs), \texttt{zertifikat.tex} and \texttt{zertifikat.pdf}
+(if \texttt{pdflatex} is found), \texttt{zertifikat.json} (all data,
+machine-readable) and an unchanged copy of the test log, whose checksum
+is printed on the certificate. Each certificate adds a line to
+\texttt{certificates/verlauf.csv}. The test logs in \texttt{logs/} are not
+under version control, the certificates are.
+
+\paragraph*{Tests.} \texttt{tests/test\_certificate.py} checks the tool
+with small JUnit XML and AAS7 JSON logs: passed and failed certificates,
+the checksum of the enclosed copy, \texttt{--min-tests} and
+\texttt{--streng}, unique folder names and the history, the automatic
+choice of the newest log, German as default and the exit codes of the
+command line.
+
 \section{Current tests}
 
 % 0.3.0: table extended from two to all eight modules of tests/
@@ -234,4 +283,7 @@ File & Content \\
   geometry, receive path, sensitivity \\  % 0.4.0
 docstrings in \texttt{src/interferosim/} & 13 doctests
   (section~\ref{sec:doctests}) \\  % 0.4.0
+\texttt{tests/test\_certificate.py} & test certificate tool
+  (section~\ref{sec:certificate}): passed/failed, checksum, criteria,
+  unique folders and history, choice of the log, exit codes \\  % 0.5.0
 \end{longtable}

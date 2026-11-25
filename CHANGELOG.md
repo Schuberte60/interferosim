@@ -7,6 +7,16 @@ strictly higher than the previous one.
 ## [Unreleased]
 
 ### Added
+- Test certificate (version 1.0.5): `tools/testzertifikat.py` 1.1.0, taken
+  over from AAS7 (Python standard library only, usable in any project).
+  New in 1.1.0: `--sprache de|en` (German default, output identical to
+  1.0.0; Interferosim uses English) and the newest JUnit XML
+  `logs/tests/*.xml` as default test log when there is no AAS7 JSON log.
+  Certificates go to `certificates/<TC_...>/` (HTML, TeX/PDF, JSON, copy
+  of the log) with the history in `certificates/verlauf.csv`;
+  `logs/` is ignored by git. Tests: `tests/test_certificate.py` (10 tests).
+  Documentation: chapter "Tests and Validation" 0.5.0, "Repository
+  Structure" 0.3.0, LaTeX documentation 1.0.4; README.
 - Test requirements of the course (version 1.0.4):
   - line coverage with `pytest-cov`: settings `[tool.coverage.*]` in
     `pyproject.toml`, `fail_under = 75`; `pytest --cov` reports 91 %;
