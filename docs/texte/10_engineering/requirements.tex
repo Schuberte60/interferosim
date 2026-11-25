@@ -1,5 +1,7 @@
 % docs/texte/10_engineering/requirements.tex -- chapter "Requirements" (Interferosim)
-% Version: 0.3.0 (2026-11-23) -- N-9 to N-11: coverage, doctests,
+% Version: 0.4.0 (2026-11-25) -- status brought up to date with the code
+%   (interferosim 1.0.5); new status "partly"; notes on the open points
+%   0.3.0 (2026-11-23) -- N-9 to N-11: coverage, doctests,
 %   property-based tests (requirements of the course)
 %   0.2.1 (2026-11-03) -- N-7 done (MIT License, release 1.0.0)
 %   0.2.0: requirements with identifiers
@@ -12,7 +14,7 @@ notebooks~A and~B, the AAS6 simulation chain and the decisions of
 chapter~\ref{ch:basic-design}. Every requirement has an identifier;
 tests and chapters refer to it. \emph{Phase} is the phase of the
 development plan in which the requirement is implemented; \emph{Status}:
-done, open.
+done, partly, open (status of interferosim 1.0.5, 25.11.2026).
 
 \section{Functional requirements}
 
@@ -35,46 +37,46 @@ F-SKY-2 & Sky models are read and written in the JSON format of AAS6
 F-SKY-3 & Analytic visibility of every component. & 2 & done \\
 F-SKY-4 & Maps of a sky model (full field and zoom). & 2 & done \\
 F-SKY-5 & Spectrum per component: continuum (spectral index) and
-  spectral lines (HI, OH) for several frequency channels. & 2 & open \\
+  spectral lines (HI, OH) for several frequency channels. & 2 & done \\
 \multicolumn{4}{@{}l}{\textit{Instrument}}\\
 F-INS-1 & Selectable antenna types: horn, parabolic dish, Yagi; further
-  types as subclasses. & 2 & open \\
+  types as subclasses. & 2 & done \\
 F-INS-2 & Receiver model with the device profile of the Ettus USRP B210
-  (two coherent channels). & 2 & open \\
+  (two coherent channels). & 2 & done \\
 F-INS-3 & Stations with geodetic position (WGS84) and an antenna;
-  arrays of two or more stations; baselines. & 2 & open \\
+  arrays of two or more stations; baselines. & 2 & done \\
 F-INS-4 & Antennas, receivers and sites are configured in files
   (\texttt{configs/}). & 1 & done \\
 \multicolumn{4}{@{}l}{\textit{Observation}}\\
 F-OBS-1 & Hour angle, elevation and uv-coverage with Earth rotation
-  synthesis (sidereal and solar rate). & 2 & open \\
+  synthesis (sidereal and solar rate). & 2 & done \\
 F-OBS-2 & Direct computation of visibilities with noise (radiometer
-  equation, SEFD). & 2 & open \\
+  equation, SEFD). & 2 & done \\
 F-OBS-3 & Transit (drift scan) of fixed antennas as time series
-  (\texttt{TransitSimulator}). & 2 & open \\
+  (\texttt{TransitSimulator}). & 2 & done \\
 F-OBS-4 & Adding and multiplying interferometer; fringe rate and
-  delay. & 2 & open \\
+  delay. & 2 & partly \\
 \multicolumn{4}{@{}l}{\textit{Signal (closed simulation)}}\\
 F-SIG-1 & Simulated IQ samples per station with geometric delay, fringe
-  phase, primary beam attenuation and receiver noise. & 2 & open \\
+  phase, primary beam attenuation and receiver noise. & 2 & done \\
 F-SIG-2 & FX correlator: fractional delay, fringe stopping, delay/rate
-  search, cross spectra $\rightarrow$ \texttt{VisData}. & 2 & open \\
+  search, cross spectra $\rightarrow$ \texttt{VisData}. & 2 & done \\
 \multicolumn{4}{@{}l}{\textit{Imaging and deconvolution}}\\
 F-IMG-1 & Gridding; natural, uniform and Wiener weighting; dirty image
-  and dirty beam, per channel or channel average. & 3 & open \\
-F-DEC-1 & Högbom CLEAN with clean beam and restoration. & 3 & open \\
-F-DEC-2 & Wiener filter for filled apertures. & 3 & open \\
+  and dirty beam, per channel or channel average. & 3 & done \\
+F-DEC-1 & Högbom CLEAN with clean beam and restoration. & 3 & done \\
+F-DEC-2 & Wiener filter for filled apertures. & 3 & done \\
 F-DEC-3 & Comparison metrics (effective beam width, RMS error against a
-  reference). & 3 & open \\
+  reference). & 3 & done \\
 \multicolumn{4}{@{}l}{\textit{Data and user interface}}\\
 F-DAT-1 & One visibility data class (\texttt{VisData}) with frequency
-  axis for simulated and measured data. & 2 & open \\
+  axis for simulated and measured data. & 2 & done \\
 F-DAT-2 & FITS input/output compatible with \texttt{aas6sim}
   (simulated data marked by \texttt{SIMULATD = T}). & 2 & open \\
 F-UI-1 & Interactive notebooks (ipywidgets), one per topic; usable
-  without programming knowledge. & 4 & open \\
+  without programming knowledge. & 4 & partly \\
 F-UI-2 & Notebooks~A (Wiener filter vs.\ CLEAN) and~B (the Sun as a
-  first target) reproduced with the package. & 4 & open \\
+  first target) reproduced with the package. & 4 & done \\
 \end{longtable}
 
 \section{Non-functional requirements}
@@ -112,3 +114,24 @@ N-10 & Executable examples in the docstrings, tested with
   \texttt{pytest --doctest-modules}. & 5 & done \\
 N-11 & Property-based tests with Hypothesis. & 5 & done \\
 \end{longtable}
+
+% 0.4.0: what is still missing
+\section{Open points}
+
+\begin{itemize}
+  \item \textbf{F-OBS-4} (partly): fringe rate and delay are implemented
+        (\texttt{observation.geometry}, \texttt{signal}); a model of the
+        adding and the multiplying interferometer is not yet part of the
+        package (only the live demo shows the fringes).
+  \item \textbf{F-DAT-2} (open): \texttt{VisData} is saved as
+        \texttt{.npz}; FITS input/output compatible with \texttt{aas6sim}
+        (\texttt{interferosim.io}) is still missing.
+  \item \textbf{F-UI-1} (partly): every notebook except~00 has its own
+        ipywidgets controls; the common front end
+        \texttt{interferosim.widgets} is still empty.
+  \item \textbf{N-3} (open): tested on Windows and Linux; macOS,
+        JupyterHub and Binder are not tested yet.
+  \item \textbf{N-4} (open): all modules have unit tests (coverage
+        91\,\%); the automatic notebook runs with nbval are not set up yet.
+\end{itemize}
+

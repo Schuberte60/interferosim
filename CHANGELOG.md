@@ -46,6 +46,11 @@ strictly higher than the previous one.
   shown as overview on the start page (`docs/sphinx/index.rst`).
 
 ### Changed
+- LaTeX documentation 1.0.5, chapter "Requirements" (`requirements.tex`
+  0.4.0): status of all requirements brought up to date with the code
+  (most functional requirements were still marked "open"); new status
+  "partly" (F-OBS-4, F-UI-1); new section "Open points" (F-OBS-4, F-DAT-2,
+  F-UI-1, N-3, N-4).
 - Licence: the documentation (`docs/`), the own figures and the text cells
   of the notebooks are released under CC BY 4.0 (new file `LICENSE-docs`);
   the code stays under the MIT License (`LICENSE`). Updated: README,
