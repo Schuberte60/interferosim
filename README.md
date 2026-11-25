@@ -125,6 +125,53 @@ interferosim-sky configs/skies/aas6_demo.json --overview -o demo.png
 jupyter lab notebooks          # kernel "Python (interferosim)"
 ```
 
+The command line tool writes the map of the demo field and prints
+
+```
+saved demo.png
+```
+
+`demo.png` shows the whole field and a zoom on its centre, as in
+[docs/images/sky_demo_overview.png](docs/images/sky_demo_overview.png).
+
+A first result in Python -- the visibility of Cygnus A on an east-west
+baseline (run in the project folder):
+
+```python
+from interferosim.sky import SkyModel
+from interferosim.instrument import Antenna, Receiver
+
+sky = SkyModel.from_json("configs/skies/cyg_a.json")
+print(f"Cygnus A: {sky.total_flux_jy:.0f} Jy in {len(sky.components)} components")
+for u in (0.0, 100.0, 1000.0, 5000.0):                 # east-west baseline [wavelengths]
+    print(f"|V(u = {u:6.0f} lambda)| = {abs(complex(sky.visibility(u, 0.0))):7.1f} Jy")
+
+dish = Antenna.from_toml("configs/antennas/dish_3m.toml")
+b210 = Receiver.from_toml("configs/receivers/b210.toml")
+print(f"SEFD of a 3 m dish with the B210: {b210.sefd_jy(dish):.3g} Jy")
+```
+
+Expected output:
+
+```
+Cygnus A: 1556 Jy in 5 components
+|V(u =      0 lambda)| =  1556.0 Jy
+|V(u =    100 lambda)| =  1535.4 Jy
+|V(u =   1000 lambda)| =    62.3 Jy
+|V(u =   5000 lambda)| =   139.4 Jy
+SEFD of a 3 m dish with the B210: 7.81e+04 Jy
+```
+
+At zero spacing the interferometer sees the total flux density. A baseline
+of 100 wavelengths (21 m at 21 cm) hardly resolves the source. At 1000
+wavelengths the fringe spacing is about 3.4 arcmin, comparable to the
+distance of the two radio lobes, and the amplitude drops to a few percent;
+at 5000 wavelengths it rises again -- the typical signature of a double
+source. The SEFD of about 78 000 Jy is far above the flux density of the
+source; the correlation still detects it, because the noise of one
+baseline falls as SEFD / sqrt(2 B t): about 39 Jy for B = 2 MHz and
+t = 1 s.
+
 ## Example skies
 
 `configs/skies/` contains sky models in the JSON format of AAS6
